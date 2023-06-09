@@ -1,17 +1,17 @@
 const { Router } = require("express");
 
-const copaRouter = require("./copaRouter");
-const equipoRouter = require("./equipoRouter");
-const ligaRouter = require("./ligaRouter");
-const seleccionRouter = require("./seleccionRouter");
+const cupRouter = require("./cupRouter");
+const teamRouter = require("./teamRouter");
+const ligueRouter = require("./ligueRouter");
+const nationalTeamRouter = require("./nationalTeamRouter");
 const userRouter = require("./userRouter")
 
 const router = Router();
 
-router.use("/copa", copaRouter);
-router.use("/equipo", equipoRouter);
-router.use("/liga", ligaRouter);
-router.use("/seleccion", seleccionRouter);
+router.use("/cup", cupRouter);
+router.use("/team", teamRouter);
+router.use("/ligue", ligueRouter);
+router.use("/nationalTeam", nationalTeamRouter);
 router.use("/users", userRouter)
 
 module.exports = router;
