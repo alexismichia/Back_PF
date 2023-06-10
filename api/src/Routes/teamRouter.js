@@ -1,5 +1,8 @@
-const express = require('express')
+const express = require("express");
+const { getTeams } = require("../controllers/team/getTeam");
 
-const teamRouter = express.Router()
+const teamRouter = express.Router();
 
-module.exports = teamRouter
+teamRouter.get("", getTeams);
+
+module.exports = teamRouter;
