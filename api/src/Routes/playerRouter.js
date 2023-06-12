@@ -1,8 +1,7 @@
 const express = require("express");
-const { getPlayers } = require("../controllers/user/getUser");
-
 const playerRouter = express.Router();
+const { getPlayers } = require("../controllers/player/getPlayers");
 
-playerRouter.get("", getPlayers);
+playerRouter.get('/', getPlayers);
 
 module.exports = playerRouter;
