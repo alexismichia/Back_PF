@@ -12,6 +12,6 @@ exports.getLeague = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
 };
