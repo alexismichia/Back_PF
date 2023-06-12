@@ -2,19 +2,8 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const Team = require('./models/team');
-const Player = require('./models/player');
-const Standings = require('./models/standings');
-const TeamSquad = require('./models/team_squad');
-const Coach = require('./models/coach');
-const Referee = require('./models/referee');
-const Venue = require('./models/venue');
-const TVStation = require('./models/tv_station');
-const Probabilities = require('./models/probabilities');
-const Rivals = require('./models/rivals');
-const News = require('./models/news');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST,DATABASE_URL
+  DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
 //const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
@@ -22,7 +11,7 @@ const {
   //native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 //});
 
-const sequelize = new Sequelize(DATABASE_URL, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -61,14 +50,14 @@ const {
   News,  } = sequelize.models;
 
 // Aca vendrian las relaciones
-Team.hasMany(Player, { foreignKey: 'team_id' });
-Player.belongsTo(Team, { foreignKey: 'team_id' });
+// Team.hasMany(Player, { foreignKey: 'team_id' });
+// Player.belongsTo(Team, { foreignKey: 'team_id' });
 
-TeamSquad.belongsTo(Player, { foreignKey: 'player_id' });
-TeamSquad.belongsTo(Team, { foreignKey: 'team_id' });
+// TeamSquad.belongsTo(Player, { foreignKey: 'player_id' });
+// TeamSquad.belongsTo(Team, { foreignKey: 'team_id' });
 
-Team.hasMany(Coach, { foreignKey: 'team_id' });
-Coach.belongsTo(Team, { foreignKey: 'team_id' });
+// Team.hasMany(Coach, { foreignKey: 'team_id' });
+// Coach.belongsTo(Team, { foreignKey: 'team_id' });
 
 
 // Product.hasMany(Reviews);

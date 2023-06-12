@@ -3,6 +3,10 @@ const { getTeams } = require("../controllers/team/getTeam");
 
 const teamRouter = express.Router();
 
-teamRouter.get("", getTeams);
+const {getTeam} = require('../controllers/team/getTeam.js')
 
-module.exports = teamRouter;
+teamRouter.get('/:id', getTeam)
+
+module.exports = teamRouter
+
+
