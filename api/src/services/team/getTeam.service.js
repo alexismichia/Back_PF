@@ -2,7 +2,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 const API_KEY = process.env.API_KEY;
-const BASE_URL = 'https://soccer.sportmonks.com/api/v2.0/teams/season/';
+const BASE_URL = 'https://api.sportmonks.com/v3/football/teams/countries';
 
 exports.getTeamsFromAPI = async (id) => {
   const URL = `${BASE_URL}/${id}`; 
