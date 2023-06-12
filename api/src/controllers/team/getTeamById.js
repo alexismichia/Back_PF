@@ -1,10 +1,9 @@
-const { getTeamsFromAPI } = require ('../../services/team/getTeam.service')
+const teamService = require('../../services/team/getTeam.service');
 
-
-exports.getTeam = async (req, res) => {
+exports.getTeamsById = async (req, res) => {
   const { id } = req.params;
   try {
-    const team = await getTeamsFromAPI(id); 
+    const team = await teamService.getTeamById(id); 
     if (team) {
       res.status(200).json(team);
     } else {
@@ -15,6 +14,3 @@ exports.getTeam = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
- 
