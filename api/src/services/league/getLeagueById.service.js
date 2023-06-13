@@ -4,7 +4,7 @@ require("dotenv").config();
 const API_KEY = process.env.API_KEY;
 const BASE_URL = "https://api.sportmonks.com/v3/football/leagues";
 
-exports.getLeagueFromAPI = async (id) => {
+exports.getLeagueIdFromAPI = async (id) => {
 const URL = `${BASE_URL}/${id}`
   try {
     const response = await axios.get(URL,{
