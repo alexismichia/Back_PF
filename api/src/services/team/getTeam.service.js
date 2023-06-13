@@ -50,5 +50,22 @@ teamService.getTeamBySeason = async (id) => {
   }
 };
 
+teamService.getTeamByName = async (name) => {
+  const URL = `${BASE_URL}/search/${name}`;
+  try {
+    const response = await axios.get(URL, {
+      params: {
+        api_token: API_KEY
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching data from API: ${error}`);
+    throw error;
+  }
+};
+
+
+
 
 module.exports = teamService;
