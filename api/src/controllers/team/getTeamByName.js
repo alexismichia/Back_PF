@@ -1,9 +1,9 @@
 const teamService = require('../../services/team/getTeam.service');
 
-exports.getTeamById = async (req, res) => {
-  const { id } = req.params;
+exports.getTeamByName = async (req, res) => {
+  const { name } = req.params;
   try {
-    const team = await teamService.getTeamById(id); 
+    const team = await teamService.getTeamByName(name); 
     if (team) {
       res.status(200).json(team);
     } else {
