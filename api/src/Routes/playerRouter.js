@@ -6,3 +6,4 @@ const playerRouter = express.Router();
 playerRouter.get("/", getPlayers);
 
 module.exports = playerRouter;
+
