@@ -1,9 +1,14 @@
 const express = require("express");
-const { getPlayers } = require("../controllers/player/getPlayers");
+c
+const { getPlayerById } = require("../controllers/player/getPlayersByID");
+const { getPlayersByName } = require("../controllers/player/getPlayersByName");
 
 const playerRouter = express.Router();
 
-playerRouter.get("/", getPlayers);
+playerRouter.get("/search/:name", getPlayersByName);
+playerRouter.get("/players/:ID",getPlayerById)
+
+
 
 module.exports = playerRouter;
 
