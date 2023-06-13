@@ -10,7 +10,7 @@ exports.getLeagueTeamFromAPI = async (id) =>{
         const response = await axios.get(URL,{
             params:{
               api_token: API_KEY
-            }})
+            }});
             return response.data.data
         }
      catch (error) {

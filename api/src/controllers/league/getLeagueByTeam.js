@@ -3,8 +3,9 @@ const { getLeagueTeamFromAPI } = require("../../services/league/getLeagueByTeam.
 exports.getLeagueByTeam = async (req, res) => {
   const { id } = req.params;
   try {
-    const league = getLeagueTeamFromAPI(id);
+    const league = await getLeagueTeamFromAPI(id);
     if (league) {
+      console.log(league)
       res.status(200).json(league);
     } else {
       res.status(404).json({ message: "League not found" });
