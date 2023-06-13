@@ -2,7 +2,6 @@ const { getLeagueIdFromAPI } = require("../../services/league/getLeagueById.serv
 
 exports.getLeagueById = async (req, res) => {
   const { id } = req.params;
-  console.log(id)
   try {
     const league = await getLeagueIdFromAPI(id);
     if (league) {
