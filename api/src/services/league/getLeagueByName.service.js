@@ -5,7 +5,7 @@ const API_KEY = process.env.API_KEY;
 const BASE_URL = "https://api.sportmonks.com/v3/football/leagues/search";
 
 exports.getLeagueNameFromAPI = async (name) => {
-  const URL = `${BASE_URL}/${name}`;
+  let URL = `${BASE_URL}/${name}`;
   const allData = [];
   try {
     while (URL) {
