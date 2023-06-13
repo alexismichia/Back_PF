@@ -11,7 +11,7 @@ exports.getLeagueNameFromAPI = async (name) => {
     while (URL) {
       const response = await axios.get(URL, {
         params: {
-          per_page: 2,
+          // per_page: 2, for tests
           api_token: API_KEY,
         },
       });
