@@ -7,7 +7,7 @@ const {getLeagueByCountry} = require("../controllers/league/getLeagueByCountry")
 const {getLeagueByTeam} = require("../controllers/league/getLeagueByTeam")
 
 leagueRouter.get("/search/:name", getLeagueByName);
-leagueRouter.get("/countries/:id", getLeagueByCountry)
+leagueRouter.get("/country/:id", getLeagueByCountry)
 leagueRouter.get("/team/:id", getLeagueByTeam)
 leagueRouter.get("/:id", getLeagueById);
 
