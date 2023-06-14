@@ -3,7 +3,7 @@ const { getVenuesIdFromAPI } = require("../../services/venues/getVenuesById.serv
 
 
 
-exports.getPlayerById = async (req, res) => {
+exports.getVenuesById = async (req, res) => {
     const { id } = req.params;
     console.log(id)
     try {
@@ -11,7 +11,7 @@ exports.getPlayerById = async (req, res) => {
       if (venues) {
         res.status(200).json(venues);
       } else {
-        res.status(404).json({ message: "Player not found" });
+        res.status(404).json({ message: "Estadios not found" });
       }
     } catch (err) {
       console.log(err);

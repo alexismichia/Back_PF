@@ -2,7 +2,7 @@ const { getVenuesNameFromAPI } = require("../../services/venues/getVenuesByName.
 
 
 
-module.exports.getPlayersByName = async (req, res) => {
+module.exports.getVenuesByName = async (req, res) => {
     const { name } = req.params;
   
     try {
@@ -10,7 +10,7 @@ module.exports.getPlayersByName = async (req, res) => {
       if (venues && venues.length > 0) {
         res.status(200).json(venues);
       } else {
-        res.status(404).json({ message: "No se encontraron jugadores" });
+        res.status(404).json({ message: "No se encontraron estadios" });
       }
     } catch (err) {
       console.log(err);
