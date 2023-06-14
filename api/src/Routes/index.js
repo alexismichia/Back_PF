@@ -6,7 +6,7 @@ const leagueRouter = require("./leagueRouter");
 const nationalTeamRouter = require("./nationalTeamRouter");
 const userRouter = require("./userRouter");
 const playerRouter = require("./playerRouter");
-const venuesRouter = require("./venuesRouter");
+const venuesRouter = require("./venuesRouter")
 
 const router = Router();
 

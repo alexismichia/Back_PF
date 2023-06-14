@@ -7,7 +7,7 @@ module.exports.getPlayersByName = async (req, res) => {
   
     try {
       const venues = await getVenuesNameFromAPI(name);
-      if (players && players.length > 0) {
+      if (venues && venues.length > 0) {
         res.status(200).json(venues);
       } else {
         res.status(404).json({ message: "No se encontraron jugadores" });

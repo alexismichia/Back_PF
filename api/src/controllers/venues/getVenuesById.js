@@ -8,7 +8,7 @@ exports.getPlayerById = async (req, res) => {
     console.log(id)
     try {
       const venues = await getVenuesIdFromAPI(id);
-      if (player) {
+      if (venues) {
         res.status(200).json(venues);
       } else {
         res.status(404).json({ message: "Player not found" });
