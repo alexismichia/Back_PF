@@ -67,30 +67,43 @@ teamService.getTeamByName = async (name) => {
 
 teamService.getNationalTeam = async () => {
   let page = 1;
-  let teams = [];
+  let keepGoing = true;
   let nationalTeams = [];
 
-  do {
-    try {
-      const response = await axios.get(`${BASE_URL}`, {
-        params: {
-          page: page++,
-          api_token: API_KEY
-        }
+  while (keepGoing) {
+    const response = await axios.get(`${BASE_URL}?page=${page}`, {
+      params: {
+        api_token: API_KEY
+      }
+    });
+
+    if (response.data && response.data.data && response.data.data.length > 0) {
+      const newTeams = response.data.data;
+      const nationalNewTeams = newTeams.filter(team => {
+        const teamName = team.name.toUpperCase();
+        return (
+          team.type === 'national' &&
+          !teamName.includes('U16') &&
+          !teamName.includes('U17') &&
+          !teamName.includes('U18') &&
+          !teamName.includes('U19') &&
+          !teamName.includes('U20') &&
+          !teamName.includes('U21') &&
+          !teamName.includes('U22') &&
+          !teamName.includes('U23')
+        );
       });
 
-      teams = response.data.data;
-      const filteredTeams = teams.filter(team => team.type === 'national' && !team.name.includes('U16') && !team.name.includes('U17') && !team.name.includes('U18') && !team.name.includes('U19') && !team.name.includes('U20')&& !team.name.includes('U21')&& !team.name.includes('U23'));
-      nationalTeams = [...nationalTeams, ...filteredTeams];
-
-    } catch (error) {
-      console.error(`Error fetching data from API: ${error}`);
-      throw error;
+      nationalTeams = [...nationalTeams, ...nationalNewTeams];
+      page++;
+    } else {
+      keepGoing = false;
     }
-  } while (teams.length > 0);
+  }
 
   return nationalTeams;
 };
+
 
 
 
