@@ -7,6 +7,7 @@ const playerRouter = require("./playerRouter");
 const teamRouter = require("./teamRouter");
 const nationalTeamRouter = require("./nationalTeamRouter");
 const venuesRouter = require("./venuesRouter")
+const commentaryRouter = require("./commentaryRouter")
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.use("/nationalTeam", nationalTeamRouter);
 router.use("/users", userRouter);
 router.use("/players", playerRouter);
 router.use("/venues", venuesRouter)
+router.use("/commentary", commentaryRouter)
 
 module.exports = router;
 
