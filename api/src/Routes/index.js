@@ -8,6 +8,7 @@ const teamRouter = require("./teamRouter");
 const nationalTeamRouter = require("./nationalTeamRouter");
 const venuesRouter = require("./venuesRouter")
 const commentaryRouter = require("./commentaryRouter")
+const schedulesRouter = require("./schedulesRouter");
 const fixtureRouter = require("./fixtureRouter")
 
 const router = Router();
