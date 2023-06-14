@@ -9,8 +9,8 @@ exports.getFixtureById = async (req, res) => {
     } else {
       res.status(404).json({ message: "League not found" });
     }
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Server error" });
   }
 };

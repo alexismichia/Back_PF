@@ -8,3 +8,4 @@ fixtureRouter.get("/search/:name", getFixtureByName);
 fixtureRouter.get("/:id", getFixtureById);
 
 module.exports = fixtureRouter;
+
