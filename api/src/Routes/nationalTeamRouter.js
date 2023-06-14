@@ -1,10 +1,8 @@
 const express = require("express");
-const {
-  getNationalTeams,
-} = require("../controllers/nationalTeam/getNationalTeam");
+const { getNationalTeam } = require("../controllers/nationalTeam/getNationalTeam");
 
-const nationalTeamRouter = express.Router();
+const playerRouter = express.Router();
 
-nationalTeamRouter.get("", getNationalTeams);
+playerRouter.get("/", getNationalTeam);
 
-module.exports = nationalTeamRouter;
+module.exports = playerRouter;

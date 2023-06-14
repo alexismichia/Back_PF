@@ -65,6 +65,29 @@ teamService.getTeamByName = async (name) => {
   }
 };
 
+teamService.getNationalTeam = async () => {
+  let page = 1;
+  let keepGoing = true;
+  let nationalTeams = [];
+  while (keepGoing) {
+    const response = await axios.get(`${BASE_URL}?page=${page}`, {
+      params: {
+        api_token: API_KEY
+      }
+    });
+  
+    if (response.data && response.data.data && response.data.data.length > 0) {
+      const newTeams = response.data.data;
+      const nationalNewTeams = newTeams.filter(team => team.type === 'national');
+      nationalTeams = [...nationalTeams, ...nationalNewTeams];
+      page++;
+    } else {
+      keepGoing = false;
+    }
+  }
+  return nationalTeams;
+};
+  
 
 
 
