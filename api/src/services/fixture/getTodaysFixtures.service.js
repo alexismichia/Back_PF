@@ -2,11 +2,11 @@ const axios = require("axios");
 require("dotenv").config();
 
 const API_KEY = process.env.API_KEY;
-const BASE_URL = "https://api.sportmonks.com/v3/football/fixtures/";
+const BASE_URL = "https://api.sportmonks.com/v3/football/fixtures";
 const todayDate = "todayDate"
 
 exports.getTodaysFixturesFromAPI = async (name) => {
-  let URL = `${BASE_URL}/${name}`;
+  let URL = `${BASE_URL}`;
   const allData = [];
   try {
     while (URL) {
