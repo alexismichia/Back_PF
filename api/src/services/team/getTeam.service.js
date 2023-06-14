@@ -69,25 +69,42 @@ teamService.getNationalTeam = async () => {
   let page = 1;
   let keepGoing = true;
   let nationalTeams = [];
+
   while (keepGoing) {
     const response = await axios.get(`${BASE_URL}?page=${page}`, {
       params: {
         api_token: API_KEY
       }
     });
-  
+
     if (response.data && response.data.data && response.data.data.length > 0) {
       const newTeams = response.data.data;
-      const nationalNewTeams = newTeams.filter(team => team.type === 'national');
+      const nationalNewTeams = newTeams.filter(team => {
+        const teamName = team.name.toUpperCase();
+        return (
+          team.type === 'national' &&
+          !teamName.includes('U16') &&
+          !teamName.includes('U17') &&
+          !teamName.includes('U18') &&
+          !teamName.includes('U19') &&
+          !teamName.includes('U20') &&
+          !teamName.includes('U21') &&
+          !teamName.includes('U22') &&
+          !teamName.includes('U23')
+        );
+      });
+
       nationalTeams = [...nationalTeams, ...nationalNewTeams];
       page++;
     } else {
       keepGoing = false;
     }
   }
+
   return nationalTeams;
 };
-  
+
+
 
 
 
