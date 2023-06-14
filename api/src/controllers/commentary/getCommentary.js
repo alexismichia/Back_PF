@@ -1,4 +1,4 @@
-const getCommentaryFromAPI = require("../../services/commentary/getCommentary.service")
+const {getCommentaryFromAPI} = require("../../services/commentary/getCommentary.service")
 
 exports.getCommentary = async (req, res) => {
   const { id } = req.params;
