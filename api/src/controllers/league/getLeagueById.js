@@ -1,10 +1,9 @@
-const { getLeagueFromAPI } = require("../../services/league/getLeague.service");
+const { getLeagueIdFromAPI } = require("../../services/league/getLeagueById.service");
 
-exports.getLeague = async (req, res) => {
+exports.getLeagueById = async (req, res) => {
   const { id } = req.params;
-  console.log(id)
   try {
-    const league = await getLeagueFromAPI(id);
+    const league = await getLeagueIdFromAPI(id);
     if (league) {
       res.status(200).json(league);
     } else {
