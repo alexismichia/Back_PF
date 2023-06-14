@@ -1,16 +1,18 @@
-const NationalTeamService = require
+const teamService = require('../../services/team/getTeam.service');
 
-
-module.exports.getNationalTeams = async (req, res) => {
-    try {
-      const allNationalTeams = await NationalTeamService.getAllNationalTeamsAsync();
-      if (allNationalTeams && allNationalTeams.length > 0) {
-        res.status(200).json(allNationalTeams);
-      } else {
-        res.status(404).json({ message: "No se encontro la seleccion" });
-      }
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ message: "Error de servidor" });
+exports.getNationalTeam = async (req, res) => {
+  try {
+    const team = await teamService.getNationalTeam(); 
+    if (team) {
+      res.status(200).json(team);
+    } else {
+      res.status(404).json({ message: 'No team found' });
     }
-  };
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+ 

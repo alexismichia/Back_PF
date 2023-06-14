@@ -1,12 +1,13 @@
 const { Router } = require("express");
 
 const cupRouter = require("./cupRouter");
-const teamRouter = require("./teamRouter");
 const leagueRouter = require("./leagueRouter");
-const nationalTeamRouter = require("./nationalTeamRouter");
 const userRouter = require("./userRouter");
 const playerRouter = require("./playerRouter");
-const venuesRouter = require("./venuesRouter");
+const teamRouter = require("./teamRouter");
+const nationalTeamRouter = require("./nationalTeamRouter");
+const venuesRouter = require("./venuesRouter")
+const commentaryRouter = require("./commentaryRouter");
 const schedulesRouter = require("./schedulesRouter");
 
 const router = Router();
@@ -18,6 +19,8 @@ router.use("/nationalTeam", nationalTeamRouter);
 router.use("/users", userRouter);
 router.use("/players", playerRouter);
 router.use("/venues", venuesRouter)
+router.use("/commentary", commentaryRouter)
 router.use("/schedules", schedulesRouter)
 
 module.exports = router;
+
