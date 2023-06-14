@@ -7,7 +7,7 @@ exports.getFixtureById = async (req, res) => {
     if (fixture) {
       res.status(200).json(fixture);
     } else {
-      res.status(404).json({ message: "League not found" });
+      res.status(404).json({ message: "Fixture not found" });
     }
   } catch (err) {
     console.log(err);

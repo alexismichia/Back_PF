@@ -1,9 +1,8 @@
-const { getFixtureByNameFromAPI } = require("../../services/fixture/getFixtureByName.service");
+const {getTodaysFixturesFromAPI} = require("../../services/fixture/getTodaysFixtures.service");
 
-exports.getFixtureByName = async (req, res) => {
-  const { name } = req.params;
+exports.getTodaysFixtures = async (req, res) => {
   try {
-    const fixture = await getFixtureByNameFromAPI(name);
+    const fixture = await getTodaysFixturesFromAPI();
     if (fixture) {
       res.status(200).json(fixture);
     } else {
