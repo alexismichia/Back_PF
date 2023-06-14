@@ -12,7 +12,7 @@ exports.getTodaysFixturesFromAPI = async (name) => {
       const response = await axios.get(URL, {
         params: {
             per_page: 2,
-          filters: todayDate,
+          filters: "todayDate",
           api_token: API_KEY,
         },
       });
