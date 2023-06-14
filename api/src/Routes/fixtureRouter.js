@@ -1,8 +1,11 @@
-const express = require("express")
-const fixtureRouter = express.Router()
+const express = require("express");
+const fixtureRouter = express.Router();
 
-const {getFixtureById} = require("../controllers/fixture/getFixtureById")
+const { getFixtureById } = require("../controllers/fixture/getFixtureById");
+const { getFixtureByName } = require("../controllers/fixture/getFixtureByName");
 
-fixtureRouter.get("/:id", getFixtureById)
+fixtureRouter.get("/search/:name", getFixtureByName);
+fixtureRouter.get("/:id", getFixtureById);
 
-module.exports = fixtureRouter
+module.exports = fixtureRouter;
+
