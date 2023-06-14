@@ -5,13 +5,13 @@ const API_KEY = process.env.API_KEY;
 const BASE_URL = "https://api.sportmonks.com/v3/football/fixtures/search";
 
 exports.getFixtureByNameFromAPI = async (name) => {
-  const URL = `${BASE_URL}/${name}`;
+  let URL = `${BASE_URL}/${name}`;
   const allData = [];
   try {
     while (URL) {
       const response = await axios.get(URL, {
         params: {
-          per_page: 2,
+        //   per_page: 2,
           api_token: API_KEY,
         },
       });
