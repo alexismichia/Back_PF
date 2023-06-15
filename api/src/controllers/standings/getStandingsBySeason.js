@@ -8,7 +8,7 @@ exports.getStandingsBySeason = async (req, res) => {
         if (standing) {
             res.status(200).json(standing);
         } else {
-            res.status(404).json({ message: 'No Standings found' });
+            res.status(404).json({ message: 'Standings not found' });
         }
     } catch (error) {
         console.log(error);
