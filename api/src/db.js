@@ -47,7 +47,8 @@ const {
   TVStation,
   Probabilities,
   Rivals,
-  News,  } = sequelize.models;
+  News,
+  User  } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Team.hasMany(Player, { foreignKey: 'team_id' });
@@ -75,5 +76,6 @@ module.exports = {
   Probabilities,
   Rivals,
   News,
+  User,
   // Agrega los demás modelos aquí...
 };

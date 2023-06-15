@@ -1,9 +1,9 @@
-const UserService = require
+const { getAllUsersAsync } = require("../../services/user/GetUser.service");
 
 
 module.exports.getUsers = async (req, res) => {
     try {
-      const allUsers = await UserService.getAllUsersAsync();
+      const allUsers = await getAllUsersAsync();
       if (allUsers && allUsers.length > 0) {
         res.status(200).json(allUsers);
       } else {
