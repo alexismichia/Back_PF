@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('tournaments', {
+  sequelize.define('Referee', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -13,47 +13,51 @@ module.exports = (sequelize) => {
     },
     country_id: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    city_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    common_name: {
+      type: DataTypes.STRING,
       allowNull: false,
+    },
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    active: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
-    short_code: {
+    display_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     image_path: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    type: {
-      type: DataTypes.STRING,
       allowNull: false,
     },
-    sub_type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    last_played_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    category: {
+    height: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    has_jerseys: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    }
-  }, {
-    timestamps: false
+    weight: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    date_of_birth: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('teams', {
+  sequelize.define('Tournament', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -15,17 +15,14 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    venue_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    gender: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
     short_code: {
       type: DataTypes.STRING,
@@ -35,22 +32,26 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    founded: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     type: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    placeholder: {
-      type: DataTypes.BOOLEAN,
+    sub_type: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: false,
     },
     last_played_at: {
       type: DataTypes.DATE,
       allowNull: true,
+    },
+    category: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    has_jerseys: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     }
   }, {
     timestamps: false

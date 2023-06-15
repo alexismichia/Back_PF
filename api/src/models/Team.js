@@ -1,59 +1,58 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('venues', {
+  sequelize.define('Team', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      allowNull: false,
+    },
+    sport_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     country_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    city_id: {
+    venue_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    gender: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
+    short_code: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    zipcode: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    latitude: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    longitude: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    capacity: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
     image_path: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    city_name: {
-      type: DataTypes.STRING,
+    founded: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
-    surface: {
+    type: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    national_team: {
-      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    placeholder: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    last_played_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    }
+  }, {
+    timestamps: false
   });
 };

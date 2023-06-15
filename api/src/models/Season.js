@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('referees', {
+  sequelize.define('Season', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -11,53 +11,49 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    country_id: {
+    league_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    city_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    common_name: {
-      type: DataTypes.STRING,
       allowNull: false,
     },
-    firstname: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    lastname: {
-      type: DataTypes.STRING,
+    tie_breaker_rule_id: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    display_name: {
-      type: DataTypes.STRING,
+    finished: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
-    image_path: {
-      type: DataTypes.STRING,
+    pending: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
-    height: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+    is_current: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
-    weight: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    date_of_birth: {
+    starting_at: {
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
-    gender: {
-      type: DataTypes.STRING,
+    ending_at: {
+      type: DataTypes.DATEONLY,
       allowNull: true,
+    },
+    standings_recalculated_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    games_in_current_week: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   });
 };

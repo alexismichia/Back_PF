@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('transfers', {
+  sequelize.define('Transfer', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,

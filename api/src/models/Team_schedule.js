@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('season', {
+  sequelize.define('Team_schedule', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -15,45 +15,49 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    tie_breaker_rule_id: {
+    season_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
+    },
+    type_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    sort_order: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     finished: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
-    },
-    pending: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
     },
     is_current: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
     },
     starting_at: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
+      type: DataTypes.DATE,
+      allowNull: false,
     },
     ending_at: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    standings_recalculated_at: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
     },
     games_in_current_week: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+    },
+    aggregates: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+    rounds: {
+      type: DataTypes.JSON,
+      allowNull: true,
     },
   });
 };

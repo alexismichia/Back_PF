@@ -1,12 +1,11 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('rounds', {
+  sequelize.define('Stage', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-      autoIncrement: true,
     },
     sport_id: {
       type: DataTypes.INTEGER,
@@ -20,13 +19,17 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    stage_id: {
+    type_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    sort_order: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     finished: {
       type: DataTypes.BOOLEAN,
