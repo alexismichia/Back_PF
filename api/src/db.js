@@ -1,70 +1,70 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
+const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const {
-  DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env;
+  CoachModel,
+  FixtureModel,
+  LiveScoreModel,
+  NewsModel,
+  PlayerModel,
+  ProbabilitiesModel,
+  RefereeModel,
+  RivalModel,
+  RoundModel,
+  Season_scheduleModel,
+  SeasonModel,
+  StageModel,
+  StandingsModel,
+  State_gameModel,
+  StatisticsModel,
+  Team_scheduleModel,
+  Team_squadModel,
+  TeamModel,
+  TopscoreModel,
+  TournamentModel,
+  TransferModel,
+  Tv_stationModel,
+  TypeModel,
+  UserModel,
+  VenueModel,
+} = require("./models/index");
 
-//const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
-  //logging: false, // set to console.log to see the raw SQL queries
-  //native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//});
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  }
+);
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-});
+//connects models to sequelize
+CoachModel(sequelize);
+FixtureModel(sequelize);
+LiveScoreModel(sequelize);
+NewsModel(sequelize);
+PlayerModel(sequelize);
+ProbabilitiesModel(sequelize);
+RefereeModel(sequelize);
+RivalModel(sequelize);
+RoundModel(sequelize);
+Season_scheduleModel(sequelize);
+SeasonModel(sequelize);
+StageModel(sequelize);
+StandingsModel(sequelize);
+State_gameModel(sequelize);
+StatisticsModel(sequelize);
+Team_scheduleModel(sequelize);
+Team_squadModel(sequelize);
+TeamModel(sequelize);
+TopscoreModel(sequelize);
+TournamentModel(sequelize);
+TransferModel(sequelize);
+Tv_stationModel(sequelize);
+TypeModel(sequelize);
+UserModel(sequelize);
+VenueModel(sequelize);
 
-const basename = path.basename(__filename);
-
-const modelDefiners = [];
-
-// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
-  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
-  .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
-  });
-
-// Injectamos la conexion (sequelize) a todos los modelos
-modelDefiners.forEach(model => model(sequelize));
-// Capitalizamos los nombres de los modelos ie: product => Product
-let entries = Object.entries(sequelize.models);
-let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
-sequelize.models = Object.fromEntries(capsEntries);
-
-// En sequelize.models están todos los modelos importados como propiedades
-// Para relacionarlos hacemos un destructuring
 const {
-  Team,
-  Player,
-  Standings,
-  TeamSquad,
-  Coach,
-  Referee,
-  Venue,
-  TVStation,
-  Probabilities,
-  Rivals,
-  News,
-  User  } = sequelize.models;
-
-// Aca vendrian las relaciones
-// Team.hasMany(Player, { foreignKey: 'team_id' });
-// Player.belongsTo(Team, { foreignKey: 'team_id' });
-
-// TeamSquad.belongsTo(Player, { foreignKey: 'player_id' });
-// TeamSquad.belongsTo(Team, { foreignKey: 'team_id' });
-
-// Team.hasMany(Coach, { foreignKey: 'team_id' });
-// Coach.belongsTo(Team, { foreignKey: 'team_id' });
-
-
-// Product.hasMany(Reviews);
-
-module.exports = {
-  conn: sequelize,
   Team,
   Player,
   Standings,
@@ -77,5 +77,22 @@ module.exports = {
   Rivals,
   News,
   User,
+} = sequelize.models;
+
+// Aca vendrian las relaciones
+// Team.hasMany(Player, { foreignKey: 'team_id' });
+// Player.belongsTo(Team, { foreignKey: 'team_id' });
+
+// TeamSquad.belongsTo(Player, { foreignKey: 'player_id' });
+// TeamSquad.belongsTo(Team, { foreignKey: 'team_id' });
+
+// Team.hasMany(Coach, { foreignKey: 'team_id' });
+// Coach.belongsTo(Team, { foreignKey: 'team_id' });
+
+// Product.hasMany(Reviews);
+
+module.exports = {
+  conn: sequelize,
+  ...sequelize.models,
   // Agrega los demás modelos aquí...
 };

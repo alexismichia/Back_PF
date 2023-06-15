@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('stages', {
+  sequelize.define('Team_schedule', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -50,6 +50,14 @@ module.exports = (sequelize) => {
     games_in_current_week: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+    },
+    aggregates: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+    rounds: {
+      type: DataTypes.JSON,
+      allowNull: true,
     },
   });
 };

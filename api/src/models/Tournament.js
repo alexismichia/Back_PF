@@ -1,17 +1,17 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('venues', {
+  sequelize.define('Tournament', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
-    country_id: {
+    sport_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    city_id: {
+    country_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -19,41 +19,41 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     },
-    zipcode: {
+    short_code: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    latitude: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    longitude: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    capacity: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
     image_path: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    city_name: {
+    type: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    surface: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    national_team: {
-      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    sub_type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    last_played_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    category: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    has_jerseys: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    }
+  }, {
+    timestamps: false
   });
 };

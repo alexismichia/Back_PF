@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('tv_stations', {
+  sequelize.define('Type', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -11,21 +11,23 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    url: {
+    code: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    image_path: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    type: {
+    developer_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    related_id: {
-      type: DataTypes.INTEGER,
+    model_type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    stat_group: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
+  }, {
+    timestamps: false
   });
 };
