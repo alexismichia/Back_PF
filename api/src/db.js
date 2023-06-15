@@ -1,7 +1,34 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-const UserModel = require("./models/User")
+const {
+  CoachModel,
+  FixtureModel,
+  LiveScoreModel,
+  NewsModel,
+  PlayerModel,
+  ProbabilitiesModel,
+  RefereeModel,
+  RivalModel,
+  RoundModel,
+  Season_scheduleModel,
+  SeasonModel,
+  StageModel,
+  StandingsModel,
+  State_gameModel,
+  StatisticsModel,
+  Team_scheduleModel,
+  Team_squadModel,
+  TeamModel,
+  TopscoreModel,
+  TournamentModel,
+  TransferModel,
+  Tv_stationModel,
+  TypeModel,
+  UserModel,
+  VenueModel,
+} = require("./models/index");
+
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
   {
@@ -11,7 +38,31 @@ const sequelize = new Sequelize(
 );
 
 //connects models to sequelize
+CoachModel(sequelize);
+FixtureModel(sequelize);
+LiveScoreModel(sequelize);
+NewsModel(sequelize);
+PlayerModel(sequelize);
+ProbabilitiesModel(sequelize);
+RefereeModel(sequelize);
+RivalModel(sequelize);
+RoundModel(sequelize);
+Season_scheduleModel(sequelize);
+SeasonModel(sequelize);
+StageModel(sequelize);
+StandingsModel(sequelize);
+State_gameModel(sequelize);
+StatisticsModel(sequelize);
+Team_scheduleModel(sequelize);
+Team_squadModel(sequelize);
+TeamModel(sequelize);
+TopscoreModel(sequelize);
+TournamentModel(sequelize);
+TransferModel(sequelize);
+Tv_stationModel(sequelize);
+TypeModel(sequelize);
 UserModel(sequelize);
+VenueModel(sequelize);
 
 const {
   Team,
