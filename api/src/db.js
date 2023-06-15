@@ -65,17 +65,6 @@ const {
 
 module.exports = {
   conn: sequelize,
-  Team,
-  Player,
-  Standings,
-  TeamSquad,
-  Coach,
-  Referee,
-  Venue,
-  TVStation,
-  Probabilities,
-  Rivals,
-  News,
-  User,
+  ...sequelize.models
   // Agrega los demás modelos aquí...
 };
