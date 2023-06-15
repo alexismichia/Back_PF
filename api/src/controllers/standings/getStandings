@@ -1,0 +1,15 @@
+const standingService = require('../../services/standings/getStandings.service');
+
+exports.getStandings = async (req, res) => {
+  try {
+    const standing = await standingService.getStandings(); 
+    if (standing) {
+      res.status(200).json(standing);
+    } else {
+      res.status(404).json({ message: 'No Standings found' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
