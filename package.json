@@ -5,12 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "node ./index.js",
-<<<<<<< HEAD
-        "test": "mocha -w ./tests/**/*.spec.js"
-=======
         "test": "mocha -w ./tests/**/*.spec.js",
         "db:connect": "sequelize db:connect"
->>>>>>> controllers
     },
     "author": "Alexis,OShi,Pedro",
     "license": "IMT",
@@ -20,26 +16,19 @@
     },
     "dependencies": {
         "axios": "^1.4.0",
-<<<<<<< HEAD
-=======
+
         "bcrypt": "^5.1.0",
->>>>>>> controllers
+
         "body-parser": "^1.19.0",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-<<<<<<< HEAD
-        "morgan": "^1.10.0",
-        "pg": "^8.5.1",
-        "sequelize": "^6.32.0"
-=======
         "express-jwt": "^8.4.1",
         "morgan": "^1.10.0",
         "pg": "^8.11.0",
         "sequelize": "^6.32.0",
         "sequelize-cli": "^6.6.1"
->>>>>>> controllers
     },
     "devDependencies": {
         "chai": "^4.2.0",
