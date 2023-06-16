@@ -1,6 +1,6 @@
-const userService = require('../../services/User/User.service');
+const userService = require('../../services/user/user.service');
 
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
 const { email, password, username, role, favorite_players, favorite_teams } = req.body;
   try {
     const User = await userService.createUser(email, password, username, role, favorite_players, favorite_teams); 
@@ -14,3 +14,5 @@ const { email, password, username, role, favorite_players, favorite_teams } = re
     res.status(500).json({ message: "Server error" });
   }
 };
+
+module.exports = {createUser};
