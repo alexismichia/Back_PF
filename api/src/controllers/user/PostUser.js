@@ -3,7 +3,7 @@ const userService = require('../../services/user/user.service');
 const createUser = async (req, res) => {
 const { email, password, username, role, favorite_players, favorite_teams } = req.body;
   try {
-    const User = await userService.createUser(email, password, username, role, favorite_players, favorite_teams); 
+    const User = await userService.createUser(email, password, username, favorite_players, favorite_teams); 
     if (User) {
       res.status(200).json(User);
     } else {
