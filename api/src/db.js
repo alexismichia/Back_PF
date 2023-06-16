@@ -6,16 +6,11 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-//const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`, {
-  //logging: false, // set to console.log to see the raw SQL queries
-  //native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//});
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
-
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -48,34 +43,14 @@ const {
   Probabilities,
   Rivals,
   News,
-  User  } = sequelize.models;
+  User
+} = sequelize.models;
+
 
 // Aca vendrian las relaciones
-// Team.hasMany(Player, { foreignKey: 'team_id' });
-// Player.belongsTo(Team, { foreignKey: 'team_id' });
-
-// TeamSquad.belongsTo(Player, { foreignKey: 'player_id' });
-// TeamSquad.belongsTo(Team, { foreignKey: 'team_id' });
-
-// Team.hasMany(Coach, { foreignKey: 'team_id' });
-// Coach.belongsTo(Team, { foreignKey: 'team_id' });
-
-
 // Product.hasMany(Reviews);
 
 module.exports = {
-  conn: sequelize,
-  Team,
-  Player,
-  Standings,
-  TeamSquad,
-  Coach,
-  Referee,
-  Venue,
-  TVStation,
-  Probabilities,
-  Rivals,
-  News,
-  User,
-  // Agrega los demás modelos aquí...
+  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
 };

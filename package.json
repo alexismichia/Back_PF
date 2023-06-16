@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "node ./index.js",
-        "test": "mocha -w ./tests/**/*.spec.js"
+        "test": "mocha -w ./tests/**/*.spec.js",
+        "db:connect": "sequelize db:connect"
     },
     "author": "Alexis,OShi,Pedro",
     "license": "IMT",
@@ -22,8 +23,9 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "morgan": "^1.10.0",
-        "pg": "^8.5.1",
-        "sequelize": "^6.3.5"
+        "pg": "^8.11.0",
+        "sequelize": "^6.32.0",
+        "sequelize-cli": "^6.6.1"
     },
     "devDependencies": {
         "chai": "^4.2.0",
