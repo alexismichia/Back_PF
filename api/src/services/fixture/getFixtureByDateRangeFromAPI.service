@@ -1,0 +1,42 @@
+const moment = require("moment");
+const axios = require("axios");
+require("dotenv").config();
+
+const API_KEY = process.env.API_KEY;
+const BASE_URL = "https://api.sportmonks.com/v3/football/fixtures/date/";
+
+exports.getFixtureByDateRangeFromAPI = async (startDate, endDate) => {
+  let currentDate = moment(startDate);
+  const allData = [];
+
+  try {
+    while (currentDate.isSameOrBefore(moment(endDate))) {
+      const formattedDate = currentDate.format("YYYY-MM-DD");
+      let URL = `${BASE_URL}${formattedDate}`;
+      let pagination = {};
+
+      do {
+        const response = await axios.get(URL, {
+          params: {
+            api_token: API_KEY,
+            ...pagination,
+          },
+        });
+
+        const responseData = response.data.data;
+        allData.push(...responseData);
+
+        pagination = response.data.pagination;
+        URL = pagination.next_page;
+        
+      } while (pagination && pagination.next_page);
+
+      currentDate.add(1, "day"); // Increment current date by 1 day
+    }
+
+    return allData;
+  } catch (error) {
+    console.error(`Error fetching data from API: ${error}`);
+    throw error;
+  }
+};
