@@ -22,7 +22,6 @@ router.use("/team", teamRouter);
 router.use("/league", leagueRouter);
 router.use("/nationalTeam", nationalTeamRouter);
 router.use("/nationalTeam", nationalTeamByNameRouter);
-router.use("/users", userRouter);
 router.use("/players", playerRouter);
 router.use("/venues", venuesRouter)
 router.use("/commentary", commentaryRouter)
@@ -30,6 +29,7 @@ router.use("/schedules", schedulesRouter)
 router.use("/fixture", fixtureRouter)
 router.use("/standings", standingsRouter)
 router.use("/standings", standingsBySeasonRouter)
+router.use("/users", userRouter)
 
 
 module.exports = router;

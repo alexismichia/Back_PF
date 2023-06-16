@@ -25,6 +25,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
+    role: {
+      type: DataTypes.ENUM('admin', 'user'),
+      defaultValue: 'user',
+    },
     favorite_players: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
       defaultValue: [],
