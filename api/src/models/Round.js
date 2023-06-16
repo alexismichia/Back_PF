@@ -1,11 +1,12 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('schedules_teams', {
+  sequelize.define('Round', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
+      autoIncrement: true,
     },
     sport_id: {
       type: DataTypes.INTEGER,
@@ -19,17 +20,13 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    type_id: {
+    stage_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    sort_order: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     },
     finished: {
       type: DataTypes.BOOLEAN,
@@ -50,14 +47,6 @@ module.exports = (sequelize) => {
     games_in_current_week: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-    },
-    aggregates: {
-      type: DataTypes.JSON,
-      allowNull: true,
-    },
-    rounds: {
-      type: DataTypes.JSON,
-      allowNull: true,
     },
   });
 };

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('transfers', {
+  sequelize.define('Live_score', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -11,46 +11,74 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    player_id: {
+    league_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    type_id: {
+    season_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    from_team_id: {
+    stage_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    to_team_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    position_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    detailed_position_id: {
+    group_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    date: {
-      type: DataTypes.DATEONLY,
+    aggregate_id: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
-    career_ended: {
+    round_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    state_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    venue_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    starting_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    result_info: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+    },
+    leg: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    details: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+    },
+    length: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    placeholder: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    completed: {
+    has_odds: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: false,
     },
-    amount: {
-      type: DataTypes.INTEGER,
+    starting_at_timestamp: {
+      type: DataTypes.BIGINT,
       allowNull: true,
     }
   }, {

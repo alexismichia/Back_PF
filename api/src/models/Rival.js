@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('rivals', {
+  sequelize.define('Rival', {
     sport_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

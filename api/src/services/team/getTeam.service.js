@@ -5,7 +5,7 @@ let teamService = {};
 const API_KEY = process.env.API_KEY;
 const BASE_URL = 'https://api.sportmonks.com/v3/football/teams';
 
-teamService.getTeamByCountry = async (id) => {
+teamService.getTeamsByCountry = async (id) => {
   const URL = `${BASE_URL}/countries/${id}`; 
   try {
     const response = await axios.get(URL, {

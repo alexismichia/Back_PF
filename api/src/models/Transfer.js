@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('season', {
+  sequelize.define('Transfer', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -11,49 +11,49 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    league_id: {
+    player_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    tie_breaker_rule_id: {
+    type_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    from_team_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    to_team_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    position_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    detailed_position_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    finished: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    pending: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    is_current: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    starting_at: {
+    date: {
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
-    ending_at: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    standings_recalculated_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    games_in_current_week: {
+    career_ended: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
+    completed: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
+    amount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    }
+  }, {
+    timestamps: false
   });
 };
