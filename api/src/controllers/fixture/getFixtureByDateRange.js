@@ -1,4 +1,4 @@
-const {getFixtureByDateRangeFromAPI} = require("../../services/fixture/getFixtureByDateRangeFromAPI.service")
+const {getFixtureByDateRangeFromAPI} = require("../../services/fixture/getFixtureByDateRange.service")
 
 exports.getFixtureByDateRange = async (req, res) => {
   const { startDate, endDate } = req.params;
