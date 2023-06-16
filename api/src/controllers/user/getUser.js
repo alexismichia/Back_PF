@@ -1,4 +1,4 @@
-const { getAllUsersAsync } = require("../../services/user/GetUser.service");
+const { getAllUsersAsync } = require("../../services/user/user.service");
 
 
 module.exports.getUsers = async (req, res) => {
