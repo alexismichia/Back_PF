@@ -2,7 +2,7 @@ const {getLiveScoreFromAPI} = require("../../services/livescores/getLiveScore")
 
 exports.getLiveScore = async (req, res) => {
   try {
-    const livescores = await getLiveScoreFromAPI(id);
+    const livescores = await getLiveScoreFromAPI();
     if (livescores) {
       res.status(200).json(livescores);
     } else {
