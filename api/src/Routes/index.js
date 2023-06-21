@@ -15,7 +15,8 @@ const standingsRouter = require("./standingsRouter")
 const standingsBySeasonRouter = require("./standingsRouter")
 const updateUser = require ("./userRouter")
 const loginUser = require ("./userRouter")
-const liveScoreRouter = require("./liveScoreRouter")
+const liveScoreRouter = require("./liveScoreRouter");
+const CoachesRouter = require("./CoachesRouter");
 
 const router = Router();
 
@@ -35,6 +36,7 @@ router.use("/standings", standingsBySeasonRouter)
 router.use("/users", updateUser)
 router.use("/users", loginUser)
 router.use("/livescore", liveScoreRouter)
+router.use("/coaches", CoachesRouter)
 
 
 module.exports = router;
