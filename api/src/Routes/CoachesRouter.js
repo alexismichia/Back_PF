@@ -6,6 +6,6 @@ const CoachesRouter = express.Router();
 
 //id is fixture id
 CoachesRouter.get("/:id", getcoachsid)
-CoachesRouter.get(" ", getcoachs)
+CoachesRouter.get("", getcoachs)
 
 module.exports = CoachesRouter;
