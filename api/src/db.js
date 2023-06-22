@@ -29,10 +29,10 @@ const {
   VenueModel,
 } = require("./models/index");
 
-const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
+// const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
 const sequelize = new Sequelize(
-  `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
   {
     logging: false,
     native: false,
