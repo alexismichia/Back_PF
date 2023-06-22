@@ -18,6 +18,7 @@ const loginUser = require ("./userRouter")
 const liveScoreRouter = require("./liveScoreRouter");
 const CoachesRouter = require("./CoachesRouter");
 const TransfersRouter = require("./TransfersRouter");
+const TypesRouter = require("./TypesRouter");
 
 const router = Router();
 
@@ -39,7 +40,7 @@ router.use("/users", loginUser)
 router.use("/livescore", liveScoreRouter)
 router.use("/coaches", CoachesRouter)
 router.use("/transfers", TransfersRouter)
-
+router.use("/types", TypesRouter)
 
 module.exports = router;
 
