@@ -5,14 +5,14 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: GMAIL_USER,
-    pass: GMAIL_PASSWORD,
+    user: "footballcentraladm@gmail.com",
+    pass: "PROYECTOfinal2023",
   },
 });
 
 const emailNewUser = (email) => {
     const mailOptions ={
-        from: GMAIL_USER,
+        from: "footballcentraladm@gmail.com",
         to: email,
         subject: "Football Central account",
         text:"Congratulations! Your account was created successfully"
