@@ -4,7 +4,7 @@ require("dotenv").config();
 const API_KEY = process.env.API_KEY;
 const BASE_URL = "https://api.sportmonks.com/v3/football/statistics/seasons";
 
-exports.getStatisticsbyParticipantFromAPI = async (participant, id) => {
+exports.getStatisticsByParticipantFromAPI = async (participant, id) => {
   let URL = `${BASE_URL}/${participant}/${id}`;
   const allData = [];
   try {
