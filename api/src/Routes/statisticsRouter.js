@@ -1,7 +1,7 @@
 const express = require("express");
 const statisticsRouter = express.Router();
 
-const {getStatisticsByParticipant} = require("../controllers/statistics/getStatisticsByParticipant")
-statisticsRouter.get("/:participant/:id", getStatisticsByParticipant)
+const {getSeasonStatisticsByParticipant} = require("../controllers/statistics/getSeasonStatisticsByParticipant")
+statisticsRouter.get("/:participant/:id", getSeasonStatisticsByParticipant)
 
 module.exports = statisticsRouter;

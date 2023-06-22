@@ -1,8 +1,8 @@
-const {getStatisticsByParticipantFromAPI} = require("../../services/statistics/getStatisticsByParticipant")
-exports.getStatisticsByParticipant = async (req, res) =>{
+const {getSeasonStatisticsByParticipantFromAPI} = require("../../services/statistics/getSeasonStatisticsByParticipant")
+exports.getSeasonStatisticsByParticipant = async (req, res) =>{
     const {participant, id} = req.params
     try {
-        const statistics = await getStatisticsByParticipantFromAPI(participant, id)
+        const statistics = await getSeasonStatisticsByParticipantFromAPI(participant, id)
         if (statistics) {
             res.status(200).json(statistics);
           } else {
