@@ -19,6 +19,7 @@ const liveScoreRouter = require("./liveScoreRouter");
 const CoachesRouter = require("./CoachesRouter");
 const TransfersRouter = require("./TransfersRouter");
 const TypesRouter = require("./TypesRouter");
+const statisticsRouter = require("./statisticsRouter")
 
 const router = Router();
 
@@ -41,6 +42,7 @@ router.use("/livescore", liveScoreRouter)
 router.use("/coaches", CoachesRouter)
 router.use("/transfers", TransfersRouter)
 router.use("/types", TypesRouter)
+router.use("/statistics", statisticsRouter)
 
 module.exports = router;
 
