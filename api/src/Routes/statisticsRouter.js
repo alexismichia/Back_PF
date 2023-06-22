@@ -5,6 +5,6 @@ const {getSeasonStatisticsByParticipant} = require("../controllers/statistics/ge
 const {getStageStatisticsById} = require("../controllers/statistics/getStageStatisticsById")
 //participants = coaches, players, teams or referees
 statisticsRouter.get("stages/:id", getStageStatisticsById)
-statisticsRouter.get("/:participant/:id", getSeasonStatisticsByParticipant)
+statisticsRouter.get("/seasons/:participant/:id", getSeasonStatisticsByParticipant)
 
 module.exports = statisticsRouter;
