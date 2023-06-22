@@ -1,3 +1,4 @@
+const {getStageStatisticsByIdFromAPI} = require("../../services/statistics/getStageStatisticsById")
 exports.getStageStatisticsById = async (req, res) => {
   const { id } = req.params;
   try {
