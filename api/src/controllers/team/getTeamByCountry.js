@@ -1,5 +1,5 @@
 const teamService = require('../../services/team/getTeam.service');
-const Team = require('../../models/Team');
+const {sequqelize, Team} = require('../../models/Team');
 
 exports.getTeam = async (req, res) => {
   const { id } = req.params;
