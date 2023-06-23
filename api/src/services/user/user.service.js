@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../../../src/db.js');
+const {emailNewUser} = require("../../email.js")
 const saltRounds = 10;
 const jwt = require('jsonwebtoken')
 
@@ -27,8 +28,8 @@ userService.createUser = async (email, password, username, favorite_players, fav
       favorite_players: favorite_players || [], 
       favorite_teams: favorite_teams || [] 
     });
-
-    return newUser;
+    
+    return newUser && emailNewUser(email);
 
   } catch (error) {
     console.error(`Error creating user: ${error}`);
