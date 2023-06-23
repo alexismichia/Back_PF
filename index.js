@@ -2,11 +2,10 @@ require('dotenv').config();
 const server = require('./api/src/app.js');
 const { conn } = require('./api/src/db.js');
 
-
-
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log(`Server listening at 3001`);
+  const port = process.env.PORT || 3000;
+  server.listen(port, "3001", () => {
+    console.log(`Server listening at 0.0.0.0:${port}`);
 
   });
 });
