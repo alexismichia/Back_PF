@@ -67,17 +67,33 @@ VenueModel(sequelize);
 
 const {
   Team,
-  Player,
+  Players,
   Standings,
-  TeamSquad,
+  Team_squad,
   Coach,
   Referee,
   Venue,
-  TVStation,
+  TV_station,
   Probabilities,
-  Rivals,
+  Rival,
   News,
   User,
+  Fixture,
+  Live_Score, 
+  Round,
+  Season_schedule,
+  Season,
+  Stage,
+  State_game,
+  Statistics,
+  Team_schedule,
+  Topscore,
+  Tournament,
+  Transfer,
+  Type,
+  
+
+
 } = sequelize.models;
 
 // Aca vendrian las relaciones
