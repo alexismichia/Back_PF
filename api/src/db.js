@@ -38,7 +38,6 @@ const sequelize = new Sequelize(
     native: false,
   }
 );
-
 //connects models to sequelize
 CoachModel(sequelize);
 FixtureModel(sequelize);
