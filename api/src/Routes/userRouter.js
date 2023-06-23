@@ -4,7 +4,7 @@ const { authenticateJWT } = require("../middlewares/auth");
 
 const { updateUser } = require("../controllers/user/putUser");
 const {loginUser} = require("../controllers/user/loginUser");
-const { createUser } = require("../controllers/user/postUser");
+const { createUser } = require("../controllers/user/PostUser");
 
 userRouter.post("/", createUser);
 userRouter.put("/:id", authenticateJWT, updateUser);
