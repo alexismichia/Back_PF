@@ -1,13 +1,28 @@
 const teamService = require('../../services/team/getTeam.service');
-const {sequqelize, Team} = require('../../models/Team');
+const  {Team} = require('../../db')
 
 exports.getTeam = async (req, res) => {
   const { id } = req.params;
   try {
     const team = await teamService.getTeamsByCountry(id); 
     if (team) {
-      const newteam= await Team.create(team)
-      res.status(200).json(team);
+      console.log(team)
+      const newTeamData = team.map((item) => ({
+        id: item.id,
+        country_id: item.country_id,
+        venue_id: item.venue_id,
+        gender: item.gender,
+        name: item.name,
+        short_code: item.short_code,
+        image_path: item.image_path,
+        founded: item.founded,
+        type: item.type,
+        placeholder: item.placeholder,
+        last_played_at: item.last_played_at
+      }));
+      console.log(newTeamData);
+      const newTeams = await Team.bulkCreate(newTeamData);
+      res.status(200).json(newTeams);
     } else {
       res.status(404).json({ message: 'No team found' });
     }
