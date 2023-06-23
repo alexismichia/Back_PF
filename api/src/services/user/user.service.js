@@ -28,8 +28,10 @@ userService.createUser = async (email, password, username, favorite_players, fav
       favorite_players: favorite_players || [], 
       favorite_teams: favorite_teams || [] 
     });
-    
-    return newUser && emailNewUser(email);
+
+    emailNewUser(email);
+
+    return newUser;
 
   } catch (error) {
     console.error(`Error creating user: ${error}`);
