@@ -30,7 +30,7 @@ userService.createUser = async (email, password, username, favorite_players, fav
     });
 
     emailNewUser(email);
-
+//
     return newUser;
 
   } catch (error) {
