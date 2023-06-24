@@ -7,10 +7,6 @@ module.exports = (sequelize) => {
       primaryKey: true,
       allowNull: false,
     },
-    sport_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     country_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -29,7 +25,7 @@ module.exports = (sequelize) => {
     },
     short_code: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     image_path: {
       type: DataTypes.STRING,
