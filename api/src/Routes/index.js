@@ -21,6 +21,7 @@ const TransfersRouter = require("./TransfersRouter");
 const TypesRouter = require("./TypesRouter");
 const statisticsRouter = require("./statisticsRouter")
 const putRoleRouter = require("./userRouter")
+const subscriptionRouter = require("./paymentsRouter")
 
 const router = Router();
 
@@ -45,6 +46,7 @@ router.use("/transfers", TransfersRouter)
 router.use("/types", TypesRouter)
 router.use("/statistics", statisticsRouter)
 router.use("/users", putRoleRouter)
+router.use("/subscription", subscriptionRouter)
 
 module.exports = router;
 
