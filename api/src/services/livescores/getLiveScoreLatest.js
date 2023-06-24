@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = "https://api.sportmonks.com/v3/football/livescores";
-const league = "league"
+const league = "league,venue"
 exports.getLiveScoreLatestFromAPI = async () => {
   try {
     const response = await axios.get(BASE_URL,{
