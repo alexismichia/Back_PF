@@ -22,7 +22,7 @@ exports.getLeagueById = async (req, res) => {
       };
       console.log(newLeagueData)
       const newLeague = await League.findOrCreate({
-        where: { id },
+        where: { id: newLeagueData.id },
        defaults: newLeagueData,
       });
 
