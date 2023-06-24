@@ -13,11 +13,11 @@ module.exports = (sequelize) => {
     },
     country_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     nationality_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     city_id: {
       type: DataTypes.INTEGER,
@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
     },
     position_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     detailed_position_id: {
       type: DataTypes.INTEGER,
@@ -33,27 +33,27 @@ module.exports = (sequelize) => {
     },
     type_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     common_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     firstname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lastname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     display_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     image_path: {
       type: DataTypes.STRING,
@@ -73,7 +73,7 @@ module.exports = (sequelize) => {
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     }
   }, {
     timestamps: false

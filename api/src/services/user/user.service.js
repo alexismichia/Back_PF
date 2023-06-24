@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../../../src/db.js');
-const {emailNewUser} = require("../../email.js")
+const {emailNewUser} = require("../../notifications/service/emailNewUser.js")
 const saltRounds = 10;
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { updateUsername } = require('../../notifications/service/updateUser.js');
 
 let userService = {};
 
@@ -29,7 +30,7 @@ userService.createUser = async (email, password, username, favorite_players, fav
       favorite_teams: favorite_teams || [] 
     });
 
-    emailNewUser(email);
+    emailNewUser(email, username);
 //
     return newUser;
 
@@ -59,6 +60,7 @@ userService.updateUser = async (id, email, password, username, favorite_players,
         throw new Error('Ya existe un usuario con este nombre de usuario');
       }
       user.username = username;
+      updateUsername(user.email, username)
     }
     if (password) {
       user.password = await bcrypt.hash(password, saltRounds);
@@ -99,7 +101,33 @@ userService.loginUser = async (email, password) => {
   return { user, token };
 };
 
+userService.putRole = async (userId, newRole, requestingUserRole) => {
+  try {
+    const user = await User.findByPk(userId);
 
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    if (requestingUserRole !== 'admin') {
+      throw new Error('No tienes permisos para modificar el rol de usuario');
+    }
+
+    console.log('Nuevo rol:', newRole);
+    user.role = newRole;
+    await user.save();
+
+    return user;
+  } catch (error) {
+    console.log('Error en putRole:', error); // Agrega este console.log para imprimir el error completo
+    throw new Error('Error al modificar el rol del usuario');
+  }
+}
+
+
+
+
+  
 
 
 module.exports = userService;
