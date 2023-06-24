@@ -29,14 +29,14 @@ const {
   VenueModel,
 } = require("./models/index");
 
-// const sequelize = new Sequelize(
-//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
-//   {
-//     logging: false,
-//     native: false,
-//   }
-// );
-const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
+ const sequelize = new Sequelize(
+   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
+   {
+     logging: false,
+     native: false,
+   }
+ );
+/* const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
 const sequelize = new Sequelize(
   `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
@@ -44,7 +44,7 @@ const sequelize = new Sequelize(
     logging: false,
     native: false,
   }
-);
+); */
 //connects models to sequelize
 CoachModel(sequelize);
 FixtureModel(sequelize);
@@ -74,17 +74,33 @@ VenueModel(sequelize);
 
 const {
   Team,
-  Player,
+  Players,
   Standings,
-  TeamSquad,
+  Team_squad,
   Coach,
   Referee,
   Venue,
-  TVStation,
+  TV_station,
   Probabilities,
-  Rivals,
+  Rival,
   News,
   User,
+  Fixture,
+  Live_Score, 
+  Round,
+  Season_schedule,
+  Season,
+  Stage,
+  State_game,
+  Statistics,
+  Team_schedule,
+  Topscore,
+  Tournament,
+  Transfer,
+  Type,
+  
+
+
 } = sequelize.models;
 
 // Aca vendrian las relaciones

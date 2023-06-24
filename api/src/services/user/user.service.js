@@ -101,7 +101,33 @@ userService.loginUser = async (email, password) => {
   return { user, token };
 };
 
+userService.putRole = async (userId, newRole, requestingUserRole) => {
+  try {
+    const user = await User.findByPk(userId);
 
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    if (requestingUserRole !== 'admin') {
+      throw new Error('No tienes permisos para modificar el rol de usuario');
+    }
+
+    console.log('Nuevo rol:', newRole);
+    user.role = newRole;
+    await user.save();
+
+    return user;
+  } catch (error) {
+    console.log('Error en putRole:', error); // Agrega este console.log para imprimir el error completo
+    throw new Error('Error al modificar el rol del usuario');
+  }
+}
+
+
+
+
+  
 
 
 module.exports = userService;
