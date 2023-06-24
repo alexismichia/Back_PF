@@ -9,7 +9,7 @@ exports.getTeamById = async (req, res) => {
     if (team) {
       const newTeamData = {
         id: team.id,
-        country_id: teamç.country_id,
+        country_id: team.country_id,
         venue_id: team.venue_id,
         gender: team.gender,
         name: team.name,
