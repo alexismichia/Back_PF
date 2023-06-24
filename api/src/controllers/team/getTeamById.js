@@ -5,11 +5,16 @@ const  {Team} = require('../../db')
 exports.getTeamById = async (req, res) => {
   const { id } = req.params;
   try {
-    const team = await teamService.getTeamById(id); 
-    if (team) {
-      const newTeamData = {
-        id: team.id,
-        country_id: teamç.country_id,
+    const team = await teamService.getTeamById(id);
+
+    if (!team) {
+      return res.status(404).json({ message: 'No team found' });
+    }
+
+    const [foundTeam, created] = await Team.findOrCreate({
+      where: { id },
+      defaults: {
+        country_id: team.country_id,
         venue_id: team.venue_id,
         gender: team.gender,
         name: team.name,
@@ -19,15 +24,17 @@ exports.getTeamById = async (req, res) => {
         type: team.type,
         placeholder: team.placeholder,
         last_played_at: team.last_played_at
-      };
-      console.log(newTeamData);
-      const newTeams = await Team.bulkCreate(newTeamData);
-      res.status(200).json(newTeams);
-    } else {
-      res.status(404).json({ message: 'No team found' });
+      }
+    });
+
+    if (!created) {
+      return res.status(200).json(foundTeam.toJSON());
     }
+    
+    console.log(foundTeam.toJSON());
+    res.status(200).json(foundTeam);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
