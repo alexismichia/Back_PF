@@ -7,19 +7,19 @@ exports.getTeamById = async (req, res) => {
   try {
     const team = await teamService.getTeamById(id); 
     if (team) {
-      const newTeamData = team.map((item) => ({
-        id: item.id,
-        country_id: item.country_id,
-        venue_id: item.venue_id,
-        gender: item.gender,
-        name: item.name,
-        short_code: item.short_code,
-        image_path: item.image_path,
-        founded: item.founded,
-        type: item.type,
-        placeholder: item.placeholder,
-        last_played_at: item.last_played_at
-      }));
+      const newTeamData = {
+        id: team.id,
+        country_id: teamç.country_id,
+        venue_id: team.venue_id,
+        gender: team.gender,
+        name: team.name,
+        short_code: team.short_code,
+        image_path: team.image_path,
+        founded: team.founded,
+        type: team.type,
+        placeholder: team.placeholder,
+        last_played_at: team.last_played_at
+      };
       console.log(newTeamData);
       const newTeams = await Team.bulkCreate(newTeamData);
       res.status(200).json(newTeams);
