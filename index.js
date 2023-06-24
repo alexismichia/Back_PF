@@ -7,3 +7,11 @@ conn.sync({ force: false }).then(() => {
     console.log('%s listening at 3001'); 
   });
 });
+
+// conn.sync({ force: true }).then(() => {
+//   const port = process.env.PORT || 3000;
+//   server.listen(port, "0.0.0.0", () => {
+//     console.log(`Server listening at 0.0.0.0:${port}`);
+
+//   });
+// });

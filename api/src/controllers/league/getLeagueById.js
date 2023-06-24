@@ -20,9 +20,13 @@ exports.getLeagueById = async (req, res) => {
         has_jerseys: league.has_jerseys,
         
       };
-      
-      const newLeagues = await League.create(newLeagueData);
-      res.status(200).json(newLeagues);
+      console.log(newLeagueData)
+      const newLeague = await League.findOrCreate({
+        where: { id },
+       defaults: newLeagueData,
+      });
+
+      res.status(200).json(newLeague);
     } else {
       res.status(404).json({ message: "League not found" });
     }
