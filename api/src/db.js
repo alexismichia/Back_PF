@@ -101,9 +101,6 @@ const {
   Transfer,
   Type,
   League,
-  
-
-
 } = sequelize.models;
 
 // Aca vendrian las relaciones
