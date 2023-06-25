@@ -1,6 +1,6 @@
 const {transporter} = require("../transporter")
 const {GMAIL_USER} = require("../config")
-const updateUsername = (email, username) => {
+const emailUpdateUsername = (email, username) => {
     const mailOptions = {
       from: GMAIL_USER,
       to: email,
@@ -17,4 +17,4 @@ const updateUsername = (email, username) => {
     });
   };
   
-  module.exports = { updateUsername };
+  module.exports = { emailUpdateUsername};
