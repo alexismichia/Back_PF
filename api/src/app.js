@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const router = require ('./Routes/index.js')
+const router = require ('./routes/index.js')
 const cors= require('cors')
 require('./db.js');
 

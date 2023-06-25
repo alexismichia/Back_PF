@@ -3,7 +3,7 @@ const { User } = require('../../../src/db.js');
 const {emailNewUser} = require("../../notifications/service/emailNewUser.js")
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
-const { updateUsername } = require('../../notifications/service/updateUser.js');
+const {emailUpdateUsername} = require("../../notifications/service/emailupdateUser.js")
 
 let userService = {};
 
@@ -60,7 +60,7 @@ userService.updateUser = async (id, email, password, username, favorite_players,
         throw new Error('Ya existe un usuario con este nombre de usuario');
       }
       user.username = username;
-      updateUsername(user.email, username)
+      emailUpdateUsername(user.email, username)
     }
     if (password) {
       user.password = await bcrypt.hash(password, saltRounds);
@@ -121,6 +121,19 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
   } catch (error) {
     console.log('Error en putRole:', error); // Agrega este console.log para imprimir el error completo
     throw new Error('Error al modificar el rol del usuario');
+  }
+}
+
+userService.getUser = async (id) => {
+  try {
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      throw new Error('No se encuentra el usuario');
+    }
+    return user;
+  } catch (error) {
+    console.error(`Error getting user: ${error}`);
+    throw error;
   }
 }
 
