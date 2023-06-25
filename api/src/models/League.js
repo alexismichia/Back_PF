@@ -1,27 +1,27 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('Team', {
+  sequelize.define('League', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      allowNull: true,
+    },
+    sport_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     country_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    venue_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    gender: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     },
     short_code: {
       type: DataTypes.STRING,
@@ -31,24 +31,25 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    founded: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     type: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    placeholder: {
-      type: DataTypes.BOOLEAN,
+    sub_type: {
+      type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: false,
     },
     last_played_at: {
       type: DataTypes.DATE,
       allowNull: true,
-    }
-  }, {
-    timestamps: false
+    },
+    category: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    has_jerseys: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
   });
 };

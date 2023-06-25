@@ -27,6 +27,7 @@ const {
   TypeModel,
   UserModel,
   VenueModel,
+  LeagueModel,
 } = require("./models/index");
 
  const sequelize = new Sequelize(
@@ -71,6 +72,7 @@ Tv_stationModel(sequelize);
 TypeModel(sequelize);
 UserModel(sequelize);
 VenueModel(sequelize);
+LeagueModel(sequelize);
 
 const {
   Team,
@@ -98,9 +100,7 @@ const {
   Tournament,
   Transfer,
   Type,
-  
-
-
+  League,
 } = sequelize.models;
 
 // Aca vendrian las relaciones

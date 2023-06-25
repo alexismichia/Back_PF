@@ -124,6 +124,19 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
   }
 }
 
+userService.getUser = async (id) => {
+  try {
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      throw new Error('No se encuentra el usuario');
+    }
+    return user;
+  } catch (error) {
+    console.error(`Error getting user: ${error}`);
+    throw error;
+  }
+}
+
 
 
 

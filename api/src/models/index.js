@@ -23,6 +23,7 @@ const Tv_stationModel = require("./Tv_station");
 const TypeModel = require("./Type");
 const UserModel = require("./User");
 const VenueModel = require("./Venue");
+const LeagueModel= require("./League")
 
 module.exports = {
   CoachModel,
@@ -49,5 +50,6 @@ module.exports = {
   Tv_stationModel,
   TypeModel,
   UserModel,
-  VenueModel
+  VenueModel,
+  LeagueModel,
 };

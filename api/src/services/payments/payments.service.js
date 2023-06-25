@@ -1,47 +1,102 @@
-const axios = require('axios');
-const accessToken = process.env.ACCESS_TOKEN;
+// import express from "express";
+// import fetch from "node-fetch";
+// import cors from "cors";
+// import "dotenv/config";
 
-const createSubscription = async (subscriptionData) => {
-  const requestData = {
-    reason: "Premium user",
-    auto_recurring: {
-      frequency: 1,
-      frequency_type: "months",
-      repetitions: 12,
-      billing_day: 10,
-      billing_day_proportional: true,
-      free_trial: {
-        frequency: 1,
-        frequency_type: "months"
-      },
-      transaction_amount: 1000,
-      currency_id: "ARS"
-    },
-    payment_methods_allowed: {
-      payment_types: [{}],
-      payment_methods: [{}]
-    },
-    back_url: "https://www.yoursite.com"
-  };
+// const { CLIENT_ID, APP_SECRET } = process.env;
+// const app = express();
+// const base = "https://api-m.sandbox.paypal.com";
+// app.use(cors({origin: '*'}));
 
-  try {
-    const response = await axios.post(
-      'https://api.mercadopago.com/preapproval_plan',
-      requestData,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+// const generateAccessToken = async () => {
+//   try {
+//       const auth = Buffer.from(CLIENT_ID + ":" + APP_SECRET).toString("base64");
+//       const response = await fetch(`${base}/v1/oauth2/token`, {
+//         method: "post",
+//         body: "grant_type=client_credentials",
+//         headers: {
+//           Authorization: `Basic ${auth}`,
+//         },
+//       });
+    
+//       const data = await response.json();
+//       return data.access_token;
+//   } catch(error) {
+//       console.error("Failed to generate Access Token:", error);
+//   } 
+// };
 
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to create subscription');
-  }
-};
+// const createOrder = async () => {
+//   const accessToken = await generateAccessToken();
+//   const url = `${base}/v2/checkout/orders`;
+//   const payload = {
+//       intent: "CAPTURE",
+//       purchase_units: [
+//       {
+//           amount: {
+//           currency_code: "USD",
+//           value: "0.02",
+//           },
+//       },
+//       ],
+//   };
 
-module.exports = {
-  createSubscription,
-};
+//   const response = await fetch(url, {
+//       headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${accessToken}∫`,
+//       },
+//       method: "POST",
+//       body: JSON.stringify(payload),
+//   });
+
+//   return handleResponse(response);
+// };
+
+
+// const capturePayment = async (orderID) => {
+//   const accessToken = await generateAccessToken();
+//   const url = `${base}/v2/checkout/orders/\${orderID}/capture`;
+
+//   const response = await fetch(url, {
+//       method: "post",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${accessToken}∫`,
+//       }
+//   });
+  
+//   return handleResponse(response);
+// };
+
+// async function handleResponse(response) {
+//   if (response.status === 200 || response.status === 201) {
+//     return response.json();
+//   }
+
+//   const errorMessage = await response.text();
+//   throw new Error(errorMessage);
+// }
+
+
+// app.post("/orders", async (req, res) => {
+//   try{
+//       const response = await createOrder();
+//       res.json(response);
+//   } catch(error) {
+//       console.error("Failed to create order:", error);
+//       res.status(500).json({ error: "Failed to create order." });
+//   }
+// });
+
+// app.post("/orders/:orderID/capture", async (req, res) => {
+//   try {
+//       const { orderID } = req.params;
+//       const response = await capturePayment(orderID);
+//       res.json(response);
+//   } catch (error){
+//       console.error("Failed to create order:", error);
+//       res.status(500).json({ error: "Failed to capture order." });
+//   }
+// });
+
