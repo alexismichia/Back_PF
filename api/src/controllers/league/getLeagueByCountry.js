@@ -7,31 +7,59 @@ exports.getLeagueByCountry = async (req, res) => {
   const { id } = req.params;
   try {
     const league = await getLeagueCountryFromAPI(id);
-    if (!league) {
-      return res.status(404).json({ message: 'No League found' });
-    }
-      const [foundLeague, created] = await League.findOrCreate({
-        where: { id },
-        defaults: {
-          id: league.id,
-          name: league.name,
-          active: league.active,
-          short_code: league.short_code,
-          image_path: league.image_path,
-          type: league.type,
-          sub_type: league.sub_type,
-          last_played_at: league.last_played_at,
-          category: league.category,
-          has_jerseys: league.has_jerseys,
-}})
-  
-      if (!created) {
-        return res.status(200).json(foundLeague.toJSON());
+    if (league) {
+      if (league.length === 1) {
+        const newLeagueData = {
+          id: league[0].id,
+          name: league[0].name,
+          active: league[0].active,
+          short_code: league[0].short_code,
+          image_path: league[0].image_path,
+          type: league[0].type,
+          sub_type: league[0].sub_type,
+          last_played_at: league[0].last_played_at,
+          category: league[0].category,
+          has_jerseys: league[0].has_jerseys,
+        };
+
+        const [newLeague] = await League.findOrCreate({
+          where: { id: newLeagueData.id },
+          defaults: newLeagueData,
+        });
+
+        res.status(200).json(newLeague);
+      } else {
+        const allLeagueData = [];
+        for (let i = 0; i < league.length; i++) {
+          const newLeagueData = {
+            id: league[i].id,
+            name: league[i].name,
+            active: league[i].active,
+            short_code: league[i].short_code,
+            image_path: league[i].image_path,
+            type: league[i].type,
+            sub_type: league[i].sub_type,
+            last_played_at: league[i].last_played_at,
+            category: league[i].category,
+            has_jerseys: league[i].has_jerseys,
+          };
+
+          const newLeague = await League.findOrCreate({
+            where: { id: newLeagueData.id },
+            defaults: newLeagueData,
+          });
+
+          allLeagueData.push(newLeague);
+        }
+
+        console.log(allLeagueData);
+        res.status(200).json(allLeagueData);
       }
-      
-      console.log(foundLeague.toJSON());
-      res.status(200).json(foundLeague);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Server error' });
-    }}
+    } else {
+      res.status(404).json({ message: "League not found" });
+    }
+  } catch{
+    console.log(err);
+    res.status(500).json({ error: "Server error" });
+  }
+  }
