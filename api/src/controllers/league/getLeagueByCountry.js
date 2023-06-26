@@ -7,6 +7,7 @@ exports.getLeagueByCountry = async (req, res) => {
   const { id } = req.params;
   try {
     const league = await getLeagueCountryFromAPI(id);
+    console.log(league)
     if (!league) {
       return res.status(404).json({ message: 'No League found' });
     }
@@ -26,10 +27,9 @@ exports.getLeagueByCountry = async (req, res) => {
 }})
   
       if (!created) {
-        return res.status(200).json(foundLeague.toJSON());
+        return res.status(200).json(foundLeague);
       }
-      
-      console.log(foundLeague.toJSON());
+
       res.status(200).json(foundLeague);
     } catch (error) {
       console.log(error);
