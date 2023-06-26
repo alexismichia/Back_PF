@@ -22,7 +22,7 @@ exports.getLeagueByCountry = async (req, res) => {
           has_jerseys: item.has_jerseys,
           
         }));
-        const newLeagues = await League.findOrCreate( {where: { id: id },
+        const newLeagues = await League.findOrCreate( {where: { id: newLeagueData.id },
           defaults: newLeagueData,});
         res.status(200).json(newLeagues);}
  else {
