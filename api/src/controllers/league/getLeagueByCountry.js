@@ -7,30 +7,31 @@ exports.getLeagueByCountry = async (req, res) => {
   const { id } = req.params;
   try {
     const league = await getLeagueCountryFromAPI(id);
-    if (league) {
-      const newLeagueData = {
-        id: league.id,
-        name: league.name,
-        active: league.active,
-        short_code: league.short_code,
-        image_path: league.image_path,
-        type: league.type,
-        sub_type: league.sub_type,
-        last_played_at: league.last_played_at,
-        category: league.category,
-        has_jerseys: league.has_jerseys,
-      };
-      console.log(newLeagueData)
-      const newLeagues = await League.findOrCreate({
-        where: { id: newLeagueData.id },
-        defaults: newLeagueData,
-      });
-      res.status(200).json(newLeagues);
-    } else {
-      res.status(404).json({ message: "League not found" });
+    if (!league) {
+      return res.status(404).json({ message: 'No League found' });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
+      const [foundLeague, created] = await League.findOrCreate({
+        where: { id },
+        defaults: {
+          id: league.id,
+          name: league.name,
+          active: league.active,
+          short_code: league.short_code,
+          image_path: league.image_path,
+          type: league.type,
+          sub_type: league.sub_type,
+          last_played_at: league.last_played_at,
+          category: league.category,
+          has_jerseys: league.has_jerseys,
+}})
+  
+      if (!created) {
+        return res.status(200).json(foundLeague.toJSON());
+      }
+      
+      console.log(foundLeague.toJSON());
+      res.status(200).json(foundLeague);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Server error' });
+    }}
