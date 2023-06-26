@@ -22,7 +22,8 @@ exports.getLeagueByCountry = async (req, res) => {
           has_jerseys: item.has_jerseys,
           
         }));
-        const newLeagues = await League.bulkCreate(newLeagueData);
+        const newLeagues = await League.findOrCreate( {where: { id: newLeagueData.id },
+          defaults: newLeagueData,});
         res.status(200).json(newLeagues);
       } else if (league.length === 1) {
         // Si hay un solo nombre
