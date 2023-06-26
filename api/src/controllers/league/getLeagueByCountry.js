@@ -36,9 +36,11 @@ exports.getLeagueByCountry = async (req, res) => {
             last_played_at: league.last_played_at,
             category: league.category,
             has_jerseys: league.has_jerseys,}
+            console.log(newLeague)
             const newLeague = await League.findOrCreate({where:{id: newLeagueData.id}, defaults: newLeagueData})
             allLeagueData.push(newLeague)
         }
+        console.log(allLeagueData)
         res.status(200).json(allLeagueData)
       }
     }
