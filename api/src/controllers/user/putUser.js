@@ -1,13 +1,13 @@
 const userService = require('../../services/user/user.service');
 
 const updateUser = async (req, res) => {
-  const { id } = req.user;
-  const { email, password, username, favorite_players, favorite_teams } = req.body;
-
+  const { id } = req.params;
+  const body= req.body;
+  console.log(id)
+  console.log(body)
   try {
-    const user = await userService.updateUser(id, email, password, username, favorite_players, favorite_teams);
+    const user = await userService.updateUser(id, body);
     if (user) {
-      delete user.dataValues.password;
       res.status(200).json(user);
     } else {
       res.status(404).json({ message: 'No user found' });
