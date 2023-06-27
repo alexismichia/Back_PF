@@ -58,7 +58,7 @@ exports.getLeagueByCountry = async (req, res) => {
     } else {
       res.status(404).json({ message: "League not found" });
     }
-  } catch{
+  } catch(err){
     console.log(err);
     res.status(500).json({ error: "Server error" });
   }
