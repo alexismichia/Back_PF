@@ -8,24 +8,17 @@ const putUserImage = async (req, res) => {
       return res.status(400).json({ error: "Failed to upload image" });
     }
 
-    const { id } = req.body;
-
+    const { id } = req.params;
     try {
-      const data = await uploadToCloudinary(req.file.path, "User-Images");
+      const data = await uploadToCloudinary(req.file, "User-Images");
       const user = await User.findByPk(id);
 
       if (!user) {
         return res.status(400).json({ message: "There are no Users with that id" });
       } else {
-        await User.update(
-          {
-            image: {
-              publicId: data.public_id,
-              imageUrl: data.url,
-            },
-          },
-          { where: { id: user.id } }
-        );
+        await User.update({where:{id: id},
+          image: { publicId: data.public_id, imageUrl: data.url },
+        });
       }
 
       res.status(200).json({ message: "User Image uploaded successfully" });
