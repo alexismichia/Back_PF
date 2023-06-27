@@ -1,0 +1,16 @@
+const BASE_URL = "https://api.sportmonks.com/v3/football/stages";
+
+exports.getStagesIdFromAPI = async (id) => {
+const URL = `${BASE_URL}/${id}`
+  try {
+    const response = await axios.get(URL,{
+      params:{
+        api_token: API_KEY
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching data from API: ${error}`);
+    throw error;
+  }
+};
