@@ -9,7 +9,7 @@ const { putRole } = require("../controllers/user/putRole");
 const { getUserId } = require("../controllers/user/getUserById");
 
 userRouter.post("/", createUser);
-userRouter.put("/role/:id", authenticateJWT, authorizeRole("admin"), putRole);
+//userRouter.put("/role/:id", authenticateJWT, authorizeRole("admin"), putRole);
 userRouter.put("/:id", authenticateJWT, updateUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/:id", getUserId);
