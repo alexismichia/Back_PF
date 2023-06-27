@@ -42,7 +42,7 @@ module.exports = (sequelize) => {
       defaultValue: false,
     },
     image:{
-      type: DataTypes.STRING,
+      type: DataTypes.JSONB,
       allowNull: true
     }
   });
