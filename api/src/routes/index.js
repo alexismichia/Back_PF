@@ -52,7 +52,7 @@ router.use("/users", putRoleRouter)
 router.use("/subscription", subscriptionRouter)
 router.use("/States", StateRouter)
 router.use("/News",newsRouter)
-router.use("Stages",stagesRouter)
+router.use("/Stages",stagesRouter)
 
 module.exports = router;
 
