@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
     },
     image:{
       type: DataTypes.JSONB,
-      allowNull: true
+      defaultValue:{ public_id: '', imageUrl: '' }
     }
   });
 };

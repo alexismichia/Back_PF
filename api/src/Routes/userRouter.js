@@ -1,7 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
 const { authenticateJWT, authorizeRole } = require("../middlewares/auth");
-const upload = require("../middlewares/upload")
 
 const { updateUser } = require("../controllers/user/putUser");
 const { loginUser } = require("../controllers/user/loginUser");
@@ -14,7 +13,7 @@ userRouter.post("/", createUser);
 //userRouter.put("/role/:id", authenticateJWT, authorizeRole("admin"), putRole);
 userRouter.put("/:id", authenticateJWT, updateUser);
 userRouter.post("/login", loginUser);
-userRouter.put("/image/:id", upload.single("image"), putUserImage)
+userRouter.put("/image/:id",  putUserImage)
 userRouter.get("/:id", getUserId);
 
 module.exports = userRouter;
