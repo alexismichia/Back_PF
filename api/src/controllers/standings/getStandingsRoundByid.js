@@ -1,12 +1,12 @@
-const standingService = require("../../services/standings/getStandings.service");
-const {Standings}= require("../../db")
+const {Standings}= require("../../db");
+const { getStandingsByRoundsId } = require("../../services/standings/getStandingRounId.service");
 
 
 exports.getStandingRoundById = async (req, res) => {
     const { id } = req.params;
     try {
-      const standing = await standingService.getStandingsByRoundsId(id);
-  
+      const standing = await getStandingsByRoundsId(id);
+      console.log("valores del service",standing)
       if (!standing) {
         return res.status(404).json({ message: 'No standing found' });
       }
@@ -29,12 +29,12 @@ exports.getStandingRoundById = async (req, res) => {
           
         }
       });
-  
+      
       if (!created) {
         return res.status(200).json(foundStanding.toJSON());
       }
       
-      console.log(foundStanding.toJSON());
+      console.log("VALORES MAPEO",foundStanding.toJSON());
       res.status(200).json(foundStanding);
     } catch (error) {
       console.log(error);

@@ -36,4 +36,5 @@ standingService.getStandingsBySeasonAndLeague = async (seasonId, leagueId = null
 };
 
 
+
 module.exports = standingService;
