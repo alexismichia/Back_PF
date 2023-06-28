@@ -7,14 +7,12 @@ exports.getStandingRoundById = async (req, res) => {
     try {
       const standing = await getStandingsByRoundsId(id);
       console.log("valores del service",standing)
-      if (!standing) {
-        return res.status(404).json({ message: 'No standing found' });
-      }
-  
-      const [foundStanding, created] = await Standings.findOrCreate({
-        where: { id },
-        defaults: {
-            id: standing.id,
+      if (standing) {
+        const newStandingDataPromises = standing.map(async (item) => {
+          const [newStanding, created] = await Standings.findOrCreate({
+            where: { id: item.id },
+            defaults: {
+              id: standing.id,
             sport_id: standing.sport_id,
             league_id: standing.league_id,
             season_id: standing.season_id,
@@ -25,18 +23,16 @@ exports.getStandingRoundById = async (req, res) => {
             standing_rule_id: standing.standing_rule_id,
             position: standing.position,
             points: standing.points,
-            result: standing.result,          
-          
-        }
-      });
-      
-      if (!created) {
-        return res.status(200).json(foundStanding.toJSON());
-      }
-      
-      console.log("VALORES MAPEO",foundStanding.toJSON());
-      res.status(200).json(foundStanding);
-    } catch (error) {
+            result: standing.result, 
+            },
+          });
+  
+          return newStanding;
+        });
+  
+        const newStandings = await Promise.all(newStandingDataPromises);
+        res.status(200).json(newStandings);
+    }}catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Server error' });
     }
