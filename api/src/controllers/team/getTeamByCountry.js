@@ -6,27 +6,30 @@ exports.getTeam = async (req, res) => {
   try {
     const team = await teamService.getTeamsByCountry(id); 
     if (team) {
-      console.log(team)
-      const newTeamData = team.map((item) => ({
-        id: item.id,
-        country_id: item.country_id,
-        venue_id: item.venue_id,
-        gender: item.gender,
-        name: item.name,
-        short_code: item.short_code,
-        image_path: item.image_path,
-        founded: item.founded,
-        type: item.type,
-        placeholder: item.placeholder,
-        last_played_at: item.last_played_at
-      }));
-      console.log(newTeamData);
-      const newTeams = await Team.bulkCreate(newTeamData);
+      const newTeamDataPromises = team.map(async (item) => {
+        const [newTeam, created] = await Team.findOrCreate({
+          where: { id: item.id },
+          defaults: {
+            id: item.id,
+            country_id: item.country_id,
+            venue_id: item.venue_id,
+            gender: item.gender,
+            name: item.name,
+            short_code: item.short_code,
+            image_path: item.image_path,
+            founded: item.founded,
+            type: item.type,
+            placeholder: item.placeholder,
+            last_played_at: item.last_played_at,
+          },
+        });
+
+        return newTeam;
+      });
+
+      const newTeams = await Promise.all(newTeamDataPromises);
       res.status(200).json(newTeams);
-    } else {
-      res.status(404).json({ message: 'No team found' });
-    }
-  } catch (error) {
+  }} catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error" });
   }

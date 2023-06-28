@@ -21,7 +21,10 @@ const TransfersRouter = require("./TransfersRouter");
 const TypesRouter = require("./TypesRouter");
 const statisticsRouter = require("./statisticsRouter")
 const putRoleRouter = require("./userRouter")
-const subscriptionRouter = require("./paymentsRouter")
+const subscriptionRouter = require("./paymentsRouter");
+const StateRouter = require("./stategamesRouter");
+const newsRouter = require("./newsRouter");
+const stagesRouter = require("./stagesRouter");
 
 const router = Router();
 
@@ -47,6 +50,9 @@ router.use("/types", TypesRouter)
 router.use("/statistics", statisticsRouter)
 router.use("/users", putRoleRouter)
 router.use("/subscription", subscriptionRouter)
+router.use("/States", StateRouter)
+router.use("/News",newsRouter)
+router.use("/Stages",stagesRouter)
 
 module.exports = router;
 
