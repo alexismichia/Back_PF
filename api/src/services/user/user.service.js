@@ -3,8 +3,10 @@ const { User } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const { emailUpdateUser,
-} = require("../../notifications/service/emailupdateUser.js");
+const { OAuth2Client } = require('google-auth-library');
+
+const clientId = "824712636886-5dlecueq2b9iq35rv1ok86i4jvcobm7l.apps.googleusercontent.com";
+const client = new OAuth2Client(clientId); // Asegúrate de instanciar el cliente OAuth2
 
 let userService = {};
 
@@ -39,10 +41,48 @@ userService.createUser = async (
     });
 
     emailNewUser(email, username);
-    //
+    
     return newUser;
   } catch (error) {
     console.error(`Error creating user: ${error}`);
+    throw error;
+  }
+};
+
+userService.loginWithGoogle = async (token) => {
+  // Verificar el token de identidad con Google
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: clientId,
+  });
+  
+  const payload = ticket.getPayload();
+
+  if (!payload.email_verified) {
+    throw new Error("Usuario no autenticado");
+  }
+
+  // Comprobar si el usuario ya existe en la base de datos
+  let user = await User.findOne({ where: { email: payload.email } });
+  
+  // Si el usuario no existe, crear un nuevo usuario con la información del token
+  if (!user) {
+    user = await User.create({
+      username: payload.email,
+      email: payload.email,
+      password: payload.sub, // Este campo es opcional, ya que no necesitas una contraseña con Google Sign-In
+    });
+  }
+
+  return user;
+}
+
+userService.getUserByEmail = async (email) => {
+  try {
+    const user = await User.findOne({ where: { email } });
+    return user;
+  } catch (error) {
+    console.error(`Error getting user by email: ${error}`);
     throw error;
   }
 };
@@ -56,7 +96,7 @@ userService.updateUser = async (id, body) => {
       .then((data) => (userUpdated = data))
       .catch((err) => console.log(err));
   }
-  emailUpdateUser(user.email)
+
   return userUpdated;
 };
 
@@ -72,7 +112,7 @@ userService.loginUser = async (email, password) => {
   if (!validPassword) {
     throw new Error("Contraseña incorrecta");
   }
-  console.log(process.env.JWT_SECRET);
+
   const token = jwt.sign(
     { id: user.id, role: user.role },
     process.env.JWT_SECRET,
@@ -100,7 +140,7 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
 
     return user;
   } catch (error) {
-    console.log("Error en putRole:", error); 
+    console.log("Error en putRole:", error);
     throw new Error("Error al modificar el rol del usuario");
   }
 };
