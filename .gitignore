@@ -1,6 +1,5 @@
 .env
-db.js
-index.js
+
 
 # Logs
 logs

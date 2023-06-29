@@ -41,5 +41,9 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    image:{
+      type: DataTypes.JSONB,
+      defaultValue:{ public_id: '', imageUrl: '' }
+    }
   });
 };

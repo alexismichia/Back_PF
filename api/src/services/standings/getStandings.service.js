@@ -51,4 +51,5 @@ standingService.getStandingsByRoundsId = async (id) => {
   };
 
 
+
 module.exports = standingService;

@@ -8,6 +8,8 @@ const {getTeamBySeason} = require('../controllers/team/getTeamBySeason.js')
 const {getTeamByName} = require('../controllers/team/getTeamByName.js')
 const { getTeams } = require('../controllers/team/getTeams.js')
 
+
+
 teamRouter.get('/country/:id', getTeam)
 teamRouter.get('/:id', getTeamById)
 teamRouter.get('/season/:id', getTeamBySeason)
