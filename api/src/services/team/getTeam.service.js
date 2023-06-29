@@ -35,11 +35,13 @@ teamService.getTeamsByCountry = async (id) => {
 
 
 teamService.getTeamById = async (id) => {
+  const includes = "venue;coaches;players;latest;upcoming,seasons,statistics,trophies,socials"
   const URL = `${BASE_URL}/${id}`;
   try {
     const response = await axios.get(URL, {
       params: {
-        api_token: API_KEY
+        api_token: API_KEY,
+        include:includes
       }
     });
     return response.data.data;
@@ -66,10 +68,12 @@ teamService.getTeamBySeason = async (id) => {
 
 teamService.getTeamByName = async (name) => {
   const URL = `${BASE_URL}/search/${name}`;
+  const includes = "venue;coaches;players;latest;upcoming,seasons,statistics,trophies,socials"
   try {
     const response = await axios.get(URL, {
       params: {
-        api_token: API_KEY
+        api_token: API_KEY,
+        include:includes
       }
     });
     return response.data.data;
