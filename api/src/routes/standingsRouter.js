@@ -5,7 +5,7 @@ const { getStandingsBySeason } = require("../controllers/standings/getStandingsB
 const { getStandingRoundById } = require("../controllers/standings/getStandingsRoundByid");
 
 //standingsRouter.get("/", getStandings);
-standingsRouter.get("season/:id", getStandingsBySeason);
-standingsRouter.get("rounds/:id", getStandingRoundById);
+standingsRouter.get("/season/:id", getStandingsBySeason);
+standingsRouter.get("/rounds/:id", getStandingRoundById);
 
 module.exports = standingsRouter;

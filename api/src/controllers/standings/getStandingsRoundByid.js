@@ -6,27 +6,27 @@ exports.getStandingRoundById = async (req, res) => {
     const { id } = req.params;
     try {
       const standing = await getStandingsByRoundsId(id);
-      console.log("valores del service",standing)
+      
       if (standing) {
         const newStandingDataPromises = standing.map(async (item) => {
           const [newStanding, created] = await Standings.findOrCreate({
             where: { id: item.id },
             defaults: {
-              id: standing.id,
-            sport_id: standing.sport_id,
-            league_id: standing.league_id,
-            season_id: standing.season_id,
-            stage_id: standing.stage_id,
-            group_id: standing.group_id,
-            round_id: standing.round_id,
-            participant_id: standing.participant_id,
-            standing_rule_id: standing.standing_rule_id,
-            position: standing.position,
-            points: standing.points,
-            result: standing.result, 
+              id: item.id,
+            sport_id: item.sport_id,
+            league_id: item.league_id,
+            season_id: item.season_id,
+            stage_id: item.stage_id,
+            group_id: item.group_id,
+            round_id: item.round_id,
+            participant_id: item.participant_id,
+            standing_rule_id: item.standing_rule_id,
+            position: item.position,
+            points: item.points,
+            result: item.result, 
             },
           });
-  
+          console.log("valores del service",newStanding)
           return newStanding;
         });
   

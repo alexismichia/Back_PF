@@ -10,23 +10,23 @@ module.exports = (sequelize) => {
     },
     participant_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     sport_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     league_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     season_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     stage_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     group_id: {
       type: DataTypes.INTEGER,
@@ -34,23 +34,23 @@ module.exports = (sequelize) => {
     },
     round_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     standing_rule_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     position: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     result: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     points: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   });
 };
