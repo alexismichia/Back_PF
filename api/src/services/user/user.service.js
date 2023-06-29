@@ -3,8 +3,7 @@ const { User } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const {
-  emailUpdateUsername,
+const { emailUpdateUser,
 } = require("../../notifications/service/emailupdateUser.js");
 
 let userService = {};
@@ -57,7 +56,7 @@ userService.updateUser = async (id, body) => {
       .then((data) => (userUpdated = data))
       .catch((err) => console.log(err));
   }
-
+  emailUpdateUser(user.email)
   return userUpdated;
 };
 
