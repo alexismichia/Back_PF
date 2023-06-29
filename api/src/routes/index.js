@@ -11,7 +11,6 @@ const commentaryRouter = require("./commentaryRouter");
 const schedulesRouter = require("./schedulesRouter");
 const fixtureRouter = require("./fixtureRouter");
 const nationalTeamByNameRouter = require("./nationalTeamRouter");
-const standingsRouter = require("./standingsRouter");
 const standingsBySeasonRouter = require("./standingsRouter");
 const liveScoreRouter = require("./liveScoreRouter");
 const CoachesRouter = require("./CoachesRouter");
@@ -39,14 +38,11 @@ router.use("/schedules", schedulesRouter)
 router.use("/fixture", fixtureRouter)
 router.use("/standings", standingsRouter)
 router.use("/users", userRouter)
-router.use("/users", updateUser)
-router.use("/users", loginUser)
 router.use("/livescore", liveScoreRouter)
 router.use("/coaches", CoachesRouter)
 router.use("/transfers", TransfersRouter)
 router.use("/types", TypesRouter)
 router.use("/statistics", statisticsRouter)
-router.use("/users", putRoleRouter)
 router.use("/subscription", subscriptionRouter)
 router.use("/States", StateRouter)
 router.use("/News",newsRouter)

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require('google-auth-library');
 
 const clientId = "824712636886-5dlecueq2b9iq35rv1ok86i4jvcobm7l.apps.googleusercontent.com";
+const client = new OAuth2Client(clientId); // Asegúrate de instanciar el cliente OAuth2
 
 let userService = {};
 
@@ -48,11 +49,11 @@ userService.createUser = async (
   }
 };
 
-async function loginWithGoogle(token) {
+userService.loginWithGoogle = async (token) => {
   // Verificar el token de identidad con Google
   const ticket = await client.verifyIdToken({
     idToken: token,
-    audience: clientId,  // Reemplazar con tu CLIENT_ID real
+    audience: clientId,
   });
   
   const payload = ticket.getPayload();
@@ -75,7 +76,6 @@ async function loginWithGoogle(token) {
 
   return user;
 }
-
 
 userService.getUserByEmail = async (email) => {
   try {
