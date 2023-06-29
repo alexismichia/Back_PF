@@ -45,7 +45,7 @@ router.use("/types", TypesRouter)
 router.use("/statistics", statisticsRouter)
 router.use("/subscription", subscriptionRouter)
 router.use("/States", StateRouter)
-router.use("/News",newsRouter)
+router.use("/news",newsRouter)
 router.use("/Stages",stagesRouter)
 router.use("/Reviews", ReviewsRouter)
 

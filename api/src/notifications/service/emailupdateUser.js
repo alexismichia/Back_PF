@@ -1,11 +1,11 @@
 const {transporter} = require("../transporter")
 const {GMAIL_USER} = require("../config")
-const emailUpdateUsername = (email, username) => {
+const emailUpdateUser = (email) => {
     const mailOptions = {
       from: GMAIL_USER,
       to: email,
       subject: "Account updates",
-      text: `Your username was updated successfully to "${username}"! From now on your old username is no longer valid`,
+      text: `Your account has had recent changes; go to your profile at this link:${"https://football-central-bay.vercel.app/profile"} to see these changes`,
     };
     
     transporter.sendMail(mailOptions, (error, info) => {
@@ -17,4 +17,4 @@ const emailUpdateUsername = (email, username) => {
     });
   };
   
-  module.exports = { emailUpdateUsername};
+  module.exports = { emailUpdateUser};

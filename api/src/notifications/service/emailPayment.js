@@ -6,7 +6,7 @@ const emailPayment = (email) => {
       from: GMAIL_USER,
       to: email,
       subject: "Premium Account",
-      text: `You are now a premium user.`,
+      text: `Your account has been upgraded! You are now able to access our premium content!`,
     };
     
     transporter.sendMail(mailOptions, (error, info) => {

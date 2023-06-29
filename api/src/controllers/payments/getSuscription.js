@@ -1,9 +1,11 @@
+const { emailPayment } = require('../../notifications/service/emailPayment');
 const subscriptionService = require('../../services/payments/payments.service');
 
 const createSubscription = async (req, res) => {
   try {
     const subscriptionData = req.body;
     const subscription = await subscriptionService.createSubscription(subscriptionData);
+    // emailPayment()
     res.status(201).json(subscription);
   } catch (error) {
     console.log(error);
