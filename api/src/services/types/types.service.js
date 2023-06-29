@@ -26,7 +26,7 @@ try {
   }
   return allData;
 } catch (error) {
-    console.error(`Error fetching data from API: ${error}`);
+    console.error(`Error fetching data from API_sport: ${error}`);
     throw error;
   }
 };
