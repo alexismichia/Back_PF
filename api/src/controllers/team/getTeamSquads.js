@@ -1,6 +1,6 @@
 // const {getTeamSquadsFromAPI} = require("../../services/team/getTeamSquads")
 const {getTeamSquadsFromAPI} = require("../../services/team/getTeamSquads.service")
-exports.getTeams = async (req, res) => {
+exports.getTeamSquads = async (req, res) => {
     const {id} = req.params
     try {
       const teams = await getTeamSquadsFromAPI(id);

@@ -7,6 +7,7 @@ const {getTeamById} = require('../controllers/team/getTeamById.js')
 const {getTeamBySeason} = require('../controllers/team/getTeamBySeason.js')
 const {getTeamByName} = require('../controllers/team/getTeamByName.js')
 const { getTeams } = require('../controllers/team/getTeams.js')
+const {getTeamSquads} = require("../controllers/team/getTeamSquads.js")
 
 
 
