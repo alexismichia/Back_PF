@@ -11,6 +11,7 @@ exports.getTeamById = async (req, res) => {
     }
 
     const { trophies,players, ...teamData } = team;
+
     console.log(team.players, team.trophies)
     const formattedTrophies = trophies?.map((trophy) => ({
       league_id: trophy.league_id,
