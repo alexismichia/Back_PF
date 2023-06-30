@@ -14,5 +14,6 @@ teamRouter.get('/country/:id', getTeam)
 teamRouter.get('/:id', getTeamById)
 teamRouter.get('/season/:id', getTeamBySeason)
 teamRouter.get('/search/:name', getTeamByName)
+teamRouter.get("/squads/:id", getTeamSquads)
 teamRouter.get("", getTeams)
 module.exports = teamRouter
