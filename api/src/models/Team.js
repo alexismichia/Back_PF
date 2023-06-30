@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('Team', {
+  const Team = sequelize.define('Team', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -47,8 +47,40 @@ module.exports = (sequelize) => {
     last_played_at: {
       type: DataTypes.DATE,
       allowNull: true,
-    }
+    },
+    trophies: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
+      allowNull: true,
+      defaultValue: [],
+      get() {
+        const rawValue = this.getDataValue('trophies');
+        if (rawValue && Array.isArray(rawValue)) {
+          return rawValue.map((trophy) => ({
+            league_id: trophy.league_id,
+            season_id: trophy.season_id,
+          }));
+        }
+        return [];
+      },
+      set(value) {
+        if (Array.isArray(value)) {
+          const trophies = value.map((trophy) => ({
+            league_id: trophy.league_id,
+            season_id: trophy.season_id,
+          }));
+          this.setDataValue('trophies', trophies);
+        } else {
+          this.setDataValue('trophies', []);
+        }
+      },
+    },
+    players: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
+      allowNull: true,
+      defaultValue: [],
+    },
   }, {
     timestamps: false
   });
 };
+

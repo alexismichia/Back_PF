@@ -34,22 +34,22 @@ teamService.getTeamsByCountry = async (id) => {
   }};
 
 
-teamService.getTeamById = async (id) => {
-  const includes = "venue;coaches;players;latest;upcoming,seasons,statistics,trophies,socials"
-  const URL = `${BASE_URL}/${id}`;
-  try {
-    const response = await axios.get(URL, {
-      params: {
-        api_token: API_KEY,
-        include:includes
-      }
-    });
-    return response.data.data;
-  } catch (error) {
-    console.error(`Error fetching data from API: ${error}`);
-    throw error;
-  }
-};
+  teamService.getTeamById = async (id) => {
+    const URL = `${BASE_URL}/${id}`;
+    try {
+      const response = await axios.get(URL, {
+        params: {
+          api_token: API_KEY,
+          include: 'trophies;players', // Agregar los includes deseados
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      console.error(`Error fetching data from API: ${error}`);
+      throw error;
+    }
+  };
+  
 
 teamService.getTeamBySeason = async (id) => {
   const URL = `${BASE_URL}/seasons/${id}`;
