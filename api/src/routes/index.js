@@ -9,20 +9,20 @@ const nationalTeamRouter = require("./nationalTeamRouter");
 const venuesRouter = require("./venuesRouter");
 const commentaryRouter = require("./commentaryRouter");
 const schedulesRouter = require("./schedulesRouter");
-const fixtureRouter = require("./fixtureRouter");
-const nationalTeamByNameRouter = require("./nationalTeamRouter");
-const standingsBySeasonRouter = require("./standingsRouter");
+const fixtureRouter = require("./fixtureRouter")
+const nationalTeamByNameRouter = require("./nationalTeamRouter")
 const liveScoreRouter = require("./liveScoreRouter");
 const CoachesRouter = require("./CoachesRouter");
 const TransfersRouter = require("./TransfersRouter");
 const TypesRouter = require("./TypesRouter");
-const statisticsRouter = require("./statisticsRouter");
+const statisticsRouter = require("./statisticsRouter")
 const subscriptionRouter = require("./paymentsRouter");
 const StateRouter = require("./stategamesRouter");
 const newsRouter = require("./newsRouter");
 const stagesRouter = require("./stagesRouter");
 const standingsRouter = require("./standingsRouter");
 const ReviewsRouter = require("./ReviewsRouter");
+const storeRouter = require("./storeRouter");
 
 const router = Router();
 
@@ -48,5 +48,6 @@ router.use("/States", StateRouter)
 router.use("/news",newsRouter)
 router.use("/Stages",stagesRouter)
 router.use("/Reviews", ReviewsRouter)
+router.use("/Store", storeRouter)
 
 module.exports = router;

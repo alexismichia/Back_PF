@@ -145,11 +145,33 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
   }
 };
 
-userService.getUser = async (id) => {
+const { Op, Sequelize } = require("sequelize");
+
+userService.getUser = async (username) => {
   try {
-    const user = await User.findOne({ where: { id } });
+    const users = await User.findAll({
+      where: Sequelize.where(
+        Sequelize.fn('lower', Sequelize.col('username')),
+        { [Op.like]: Sequelize.fn('lower', `${username}%`) }
+      )
+    });
+
+    if (users.length === 0) {
+      throw new Error("No se encuentra ningún usuario");
+    }
+    return users;
+  } catch (error) {
+    console.error(`Error getting users: ${error}`);
+    throw error;
+  }
+};
+
+userService.getUserById = async (id) => {
+  try {
+    console.log("id", id);
+    const user = await User.findByPk(id);
     if (!user) {
-      throw new Error("No se encuentra el usuario");
+      throw new Error("No se encuentra ningún usuario con ese id");
     }
     return user;
   } catch (error) {
@@ -157,5 +179,6 @@ userService.getUser = async (id) => {
     throw error;
   }
 };
+
 
 module.exports = userService;
