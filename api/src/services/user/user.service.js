@@ -181,5 +181,4 @@ userService.getUserById = async (id) => {
 };
 
 
-
 module.exports = userService;
