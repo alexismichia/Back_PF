@@ -2,10 +2,10 @@
 exports.getAllPlayers = async (req, res) => {
     try {
       const players = await getAllPlayersFromAPI();
-      if (fixture) {
-        res.status(200).json(fixture);
+      if (players) {
+        res.status(200).json(players);
       } else {
-        res.status(404).json({ message: "Fixture not found" });
+        res.status(404).json({ message: "Players not found" });
       }
     } catch (error) {
       console.log(error);
