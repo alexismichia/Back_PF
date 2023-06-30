@@ -2,7 +2,7 @@ const userService = require('../../services/user/user.service');
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(req.body.token);
   try {
     const { user, token } = await userService.loginUser(email, password);
 

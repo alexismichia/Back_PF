@@ -5,6 +5,8 @@ const updateUser = async (req, res) => {
   const body= req.body;
   console.log(id)
   console.log(body)
+  console.log(req.body.token);
+  console.log("BODYYYY", req.body);
   try {
     const user = await userService.updateUser(id, body);
     if (user) {
