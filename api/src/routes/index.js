@@ -26,6 +26,7 @@ const newsRouter = require("./newsRouter");
 const stagesRouter = require("./stagesRouter");
 const standingsRouter = require("./standingsRouter");
 const ReviewsRouter = require("./ReviewsRouter");
+const storeRouter = require("./storeRouter");
 
 const router = Router();
 
@@ -54,6 +55,7 @@ router.use("/States", StateRouter)
 router.use("/News",newsRouter)
 router.use("/Stages",stagesRouter)
 router.use("/Reviews", ReviewsRouter)
+router.use("/Store", storeRouter)
 
 module.exports = router;
 
