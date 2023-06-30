@@ -166,5 +166,20 @@ userService.getUser = async (username) => {
   }
 };
 
+userService.getUserById = async (id) => {
+  try {
+    console.log("id", id);
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error("No se encuentra ningún usuario con ese id");
+    }
+    return user;
+  } catch (error) {
+    console.error(`Error getting user: ${error}`);
+    throw error;
+  }
+};
+
+
 
 module.exports = userService;
