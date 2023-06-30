@@ -11,12 +11,12 @@ exports.getTeamById = async (req, res) => {
     }
 
     const { trophies,players, ...teamData } = team;
-
-    const formattedTrophies = trophies.map((trophy) => ({
+    console.log(team.players, team.trophies)
+    const formattedTrophies = trophies?.map((trophy) => ({
       league_id: trophy.league_id,
       season_id: trophy.season_id,
     }));
-    const processedPlayers = players.map((player) => player.player_id);
+    const processedPlayers = players?.map((player) => player.player_id);
 
 
     const [foundTeam, created] = await Team.findOrCreate({
