@@ -1,4 +1,4 @@
-
+const {getAllPlayersFromAPI} = require("../../services/Player/getAllPlayers.service")
 exports.getAllPlayers = async (req, res) => {
     try {
       const players = await getAllPlayersFromAPI();

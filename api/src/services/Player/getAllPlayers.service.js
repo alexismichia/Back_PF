@@ -5,6 +5,7 @@ const API_KEY = process.env.API_KEY;
 const URL = "https://api.sportmonks.com/v3/football/players";
 
 exports.getAllPlayersFromAPI = async () => {
+  const allData = []
   try {
     while(URL){
         const response = await axios.get(URL,{
