@@ -180,5 +180,34 @@ userService.getUserById = async (id) => {
   }
 };
 
+userService.deleteUser = async (requestingUserId, targetUsername) => {
+  try {
+    const requestingUser = await User.findOne({ where: { id: requestingUserId } });
+    if (!requestingUser || requestingUser.role !== 'admin') {
+      throw new Error("El usuario debe ser administrador para eliminar a otros usuarios");
+    }
+
+    const targetUser = await User.findOne({ where: { username: targetUsername } });
+    if (!targetUser) {
+      throw new Error("No se encuentra ningún usuario con ese username");
+    }
+    
+    if (requestingUser.id === targetUser.id) {
+      throw new Error("No puedes eliminarte a ti mismo");
+    }
+
+    await User.destroy({ where: { username: targetUsername } });
+
+    return targetUser;
+
+  } catch (error) {
+    console.error(`Error deleting user: ${error}`);
+    throw error;
+  }
+};
+
+
+
+
 
 module.exports = userService;
