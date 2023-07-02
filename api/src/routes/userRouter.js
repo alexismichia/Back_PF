@@ -17,5 +17,6 @@ userRouter.put("/:id", updateUser);
 userRouter.post("/login", loginUser);
 userRouter.post("/login/google", loginWithGoogle);
 userRouter.put("/image/:id", putUserImage)
+userRouter.put("/role", putRole)
 
 module.exports = userRouter;
