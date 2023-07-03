@@ -21,10 +21,10 @@ storeRouter.put("/products/:id", updateProduct);
 storeRouter.delete("/products/:id", deleteProduct);
 
 // Agregar un producto al carrito
-storeRouter.post("/cart/add", createCart);
+storeRouter.put("/cart/add", createCart);
 
 // Eliminar un producto del carrito
-storeRouter.post("/cart/remove", deleteCartItem);
+storeRouter.put("/cart/remove", deleteCartItem);
 
 // Obtener los artículos del carrito
 storeRouter.get("/cart/items", getCartById);
