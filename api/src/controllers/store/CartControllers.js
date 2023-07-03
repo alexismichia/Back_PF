@@ -36,8 +36,8 @@ exports.createCart = async (req, res) => {
 exports.getCartById = async (req, res) => {
   const { cartId } = req.params;
   try {
-    // Obtener el carrito por su ID, incluyendo la información del usuario y el producto relacionados
-    const cart = await Cart.findByPk(cartId, { include: [User, Product] });
+    // Obtener el carrito por su ID, incluyendo la información del usuario y la tabla intermedia CartProduct
+    const cart = await Cart.findByPk(cartId, { include: [{ model: User }, { model: CartProduct, include: [Product] }] });
 
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
@@ -49,6 +49,7 @@ exports.getCartById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 
 // DELETE /carts/:cartId
