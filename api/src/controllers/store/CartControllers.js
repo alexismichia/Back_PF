@@ -12,15 +12,25 @@ exports.createCart = async (req, res) => {
       return res.status(404).json({ message: 'User or product not found' });
     }
 
-    // Crear el carrito en la base de datos y relacionarlo con el usuario y el producto
-    const cart = await Cart.create({ userId, productId });
+    // Verificar si el usuario ya tiene un carrito
+    const cart = await Cart.findOne({ where: { userId } });
 
-    res.status(201).json(cart);
+    if (cart) {
+      // Si el usuario ya tiene un carrito, agregar solo el producto al carrito existente
+      await cart.addProduct(product);
+    } else {
+      // Si el usuario no tiene un carrito, crear uno nuevo y relacionarlo con el usuario y el producto
+      const newCart = await Cart.create({ userId, productId });
+      await newCart.addProduct(product);
+    }
+
+    res.status(201).json({ message: 'Product added to cart successfully' });
   } catch (error) {
     console.error('Error creating cart:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 // GET /carts/:cartId
 exports.getCartById = async (req, res) => {
