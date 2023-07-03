@@ -33,14 +33,14 @@ const {
   CartModel,
 } = require("./models/index");
 
-
-    // const sequelize = new Sequelize(
-    //   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
-    //   {
-    //     logging: false,
-    //     native: false,
-    //   }
-    // );  
+/* 
+     const sequelize = new Sequelize(
+       `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
+       {
+         logging: false,
+         native: false,
+       }
+     ); */  
 
   const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
@@ -123,7 +123,7 @@ const {
 
 // Team.hasMany(Coach, { foreignKey: 'team_id' });
 // Coach.belongsTo(Team, { foreignKey: 'team_id' });
-  User.hasMany(Cart, { foreignKey: 'userId' });
+  User.hasOne(Cart, { foreignKey: 'userId' });
   Product.belongsToMany(User, { through: Cart, foreignKey: 'productId' });
   Cart.belongsTo(User, { foreignKey: 'userId' });
   Cart.belongsTo(Product, { foreignKey: 'productId' });
