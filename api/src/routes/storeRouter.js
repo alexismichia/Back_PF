@@ -27,6 +27,6 @@ storeRouter.put("/cart/add", createCart);
 storeRouter.put("/cart/remove", deleteCartItem);
 
 // Obtener los artículos del carrito
-storeRouter.get("/cart/items", getCartById);
+storeRouter.get("/cart/items/:cartId", getCartById);
 
 module.exports = storeRouter;
