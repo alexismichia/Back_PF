@@ -1,27 +1,27 @@
 const teamService = require('../../services/team/getTeam.service');
-const  {Team} = require('../../db')
-
+const { Team } = require('../../db');
 
 exports.getTeamByName = async (req, res) => {
   const { name } = req.params;
   try {
     const team = await teamService.getTeamByName(name);
+    
     if (team) {
       const newTeamDataPromises = team.map(async (item) => {
+        const { trophies, players, ...teamData } = item;
+
+        const formattedTrophies = trophies?.map((trophy) => ({
+          league_id: trophy.league_id,
+          season_id: trophy.season_id,
+        }));
+        const processedPlayers = players?.map((player) => player.player_id);
+
         const [newTeam, created] = await Team.findOrCreate({
           where: { name: item.name },
           defaults: {
-            id: item.id,
-            country_id: item.country_id,
-            venue_id: item.venue_id,
-            gender: item.gender,
-            name: item.name,
-            short_code: item.short_code,
-            image_path: item.image_path,
-            founded: item.founded,
-            type: item.type,
-            placeholder: item.placeholder,
-            last_played_at: item.last_played_at,
+            ...teamData,
+            trophies: formattedTrophies,
+            players: processedPlayers,
           },
         });
 
@@ -35,7 +35,6 @@ exports.getTeamByName = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Server error' });
-  }
+    res.status(500).json({ message: 'Server error' });
+  }
 };
-

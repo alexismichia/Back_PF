@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE',
       },
     },
+
     // productId: {
     //   type: DataTypes.ARRAY(DataTypes.INTEGER),
     //   allowNull: true,
@@ -28,6 +29,7 @@ module.exports = (sequelize) => {
     //     onUpdate: 'CASCADE',
     //   },
     // },
+
     
     quantity: {
       type: DataTypes.INTEGER,

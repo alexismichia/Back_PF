@@ -31,10 +31,12 @@ exports.createCart = async (req, res) => {
   }
 };
 
+
 // GET /carts/:cartId
 exports.getCartById = async (req, res) => {
   const { id } = req.params;
   try {
+
     // Obtener el carrito por su ID, incluyendo la información del usuario y el producto relacionados
     const cart = await Cart.findOne( {where:{userId:id},
       include: [
@@ -47,6 +49,7 @@ exports.getCartById = async (req, res) => {
         },
       ],
     });
+
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
