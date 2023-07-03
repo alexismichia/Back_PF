@@ -33,16 +33,16 @@ const {
   CartModel,
 } = require("./models/index");
 
-/* 
+
      const sequelize = new Sequelize(
        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
        {
          logging: false,
          native: false,
        }
-     ); */  
+     );  
 
-  const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
+ /*  const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
 const sequelize = new Sequelize(
   `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
@@ -50,7 +50,7 @@ const sequelize = new Sequelize(
     logging: false,
     native: false,
   }
-);   
+);  */  
 //connects models to sequelize
 CoachModel(sequelize);
 FixtureModel(sequelize);
@@ -123,11 +123,11 @@ const {
 
 // Team.hasMany(Coach, { foreignKey: 'team_id' });
 // Coach.belongsTo(Team, { foreignKey: 'team_id' });
-  User.hasOne(Cart, { foreignKey: 'userId' });
-  Product.belongsToMany(User, { through: Cart, foreignKey: 'productId' });
-  Cart.belongsTo(User, { foreignKey: 'userId' });
-  Cart.hasMany(Product, { through: 'CartProduct', foreignKey: 'cartId' });
-  Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId' });
+User.hasOne(Cart, { foreignKey: 'userId', as: 'UserCart' });
+Producd.belongsToMany(User, { through: Cart, foreignKey: 'productId', as: 'UserProducts' });
+Cart.belongsTo(User, { foreignKey: 'userId', as: 'CartUser' });
+Cart.hasMany(Product, { through: 'CartProduct', foreignKey: 'cartId', as: 'CartProducts' });
+Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId', as: 'ProductCarts' });
 
 // Product.hasMany(Reviews);
 
