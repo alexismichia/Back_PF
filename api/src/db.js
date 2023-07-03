@@ -124,7 +124,7 @@ const {
 // Team.hasMany(Coach, { foreignKey: 'team_id' });
 // Coach.belongsTo(Team, { foreignKey: 'team_id' });
 User.hasOne(Cart, { foreignKey: 'userId', as: 'UserCart' });
-Producd.belongsToMany(User, { through: Cart, foreignKey: 'productId', as: 'UserProducts' });
+Product.belongsToMany(User, { through: Cart, foreignKey: 'productId', as: 'UserProducts' });
 Cart.belongsTo(User, { foreignKey: 'userId', as: 'CartUser' });
 Cart.hasMany(Product, { through: 'CartProduct', foreignKey: 'cartId', as: 'CartProducts' });
 Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId', as: 'ProductCarts' });
