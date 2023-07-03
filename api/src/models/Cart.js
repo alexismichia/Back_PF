@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       },
     },
     productId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: false,
       references: {
         model: 'Products',
@@ -28,6 +28,7 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE',
       },
     },
+    
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
