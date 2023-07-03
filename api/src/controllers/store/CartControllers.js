@@ -1,6 +1,6 @@
 const { Cart, User, Product } = require("../../db");
 
-// POST /carts
+// put /carts
 exports.createCart = async (req, res) => {
   const { userId, productId } = req.body;
   try {
@@ -18,14 +18,11 @@ exports.createCart = async (req, res) => {
     if (!cart) {
       // Si el carrito no existe, crear uno nuevo y relacionarlo con el usuario
       cart = await Cart.create({ userId });
-      cart.productId.push(productId); 
-      await cart.save();
+      await cart.addProduct(product); // Associate the product with the cart
       res.status(201).json(cart);
     } else {
       // Agregar el productId al array cart del usuario
-      cart.productId.push(productId)
-      await cart.save();
-
+      await cart.addProduct(product); // Associate the product with the cart
       res.status(201).json(cart);
     }
   } catch (error) {
@@ -33,6 +30,7 @@ exports.createCart = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // GET /carts/:cartId
 exports.getCartById = async (req, res) => {

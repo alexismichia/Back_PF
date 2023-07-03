@@ -123,10 +123,14 @@ const {
 
 // Team.hasMany(Coach, { foreignKey: 'team_id' });
 // Coach.belongsTo(Team, { foreignKey: 'team_id' });
-  User.hasMany(Cart, { foreignKey: 'userId' });
-  Product.belongsToMany(User, { through: Cart, foreignKey: 'productId' });
-  Cart.belongsTo(User, { foreignKey: 'userId' });
-  Cart.belongsTo(Product, { foreignKey: 'productId' });
+
+  // // Product.belongsToMany(User, { through: Cart, foreignKey: 'productId' });
+  // Cart.belongsTo(User, { foreignKey: 'userId' })
+
+User.hasOne(Cart, { foreignKey: 'userId' });
+Cart.belongsTo(User, { foreignKey: 'userId' });
+Cart.belongsToMany(Product, { through: 'CartProduct', foreignKey: 'cartId' });
+Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId' });
 
 // Product.hasMany(Reviews);
 

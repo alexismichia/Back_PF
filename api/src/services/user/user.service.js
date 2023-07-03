@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../../src/db.js");
+const { User, Cart } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
 const {emailPayment} = require("../../notifications/service/emailPayment.js")
 const saltRounds = 10;
@@ -40,6 +40,7 @@ userService.createUser = async (
       favorite_players: favorite_players || [],
       favorite_teams: favorite_teams || [],
     });
+    const newCart = await Cart.create({ userId: newUser.id });
 
     emailNewUser(email, username);
     
