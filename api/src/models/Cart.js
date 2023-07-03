@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   const Cart = sequelize.define('Cart', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
