@@ -126,7 +126,8 @@ const {
 User.hasOne(Cart, { foreignKey: 'userId', as: 'UserCart' });
 Product.belongsToMany(User, { through: Cart, foreignKey: 'productId', as: 'UserProducts' });
 Cart.belongsTo(User, { foreignKey: 'userId', as: 'CartUser' });
-Cart.hasMany(Product, { through: 'CartProduct', foreignKey: 'cartId', as: 'CartProducts' });
+Cart.belongsToMany(Product, { through: 'CartProduct', foreignKey: 'cartId' });
+
 Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId', as: 'ProductCarts' });
 
 // Product.hasMany(Reviews);
