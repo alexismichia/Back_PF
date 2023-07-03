@@ -40,7 +40,7 @@ userService.createUser = async (
       favorite_players: favorite_players || [],
       favorite_teams: favorite_teams || [],
     });
-    const newCart = await Cart.create({ userId: newUser.id });
+    const newCart = await Cart.create({ userId: newUser.id, id: newUser.id });
 
     emailNewUser(email, username);
     
