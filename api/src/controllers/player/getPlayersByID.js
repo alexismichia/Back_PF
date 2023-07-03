@@ -1,44 +1,22 @@
-const { getPlayerIdFromAPI } = require("../../services/Player/getPlayersByID.service");
 const {Players} = require("../../db")
+const {getPlayerIdFromAPI}= require("../../services/Player/getPlayersByID.service")
+
 
 exports.getPlayerById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
-    const player = await getPlayerIdFromAPI(id);
-    if (player) {
-      let newPlayers;
-      if (Array.isArray(player)) {
-        const newPlayerDataPromises = player.map(async (item) => {
-          const [newPlayer, created] = await Players.findOrCreate({
-            where: { id: item.id },
-            defaults: {
-              id: item.id,
-              sport_id: item.sport_id,
-              country_id: item.country_id,
-              nationality_id: item.nationality_id,
-              city_id: item.city_id,
-              position_id: item.position_id,
-              detailed_position_id: item.detailed_position_id,
-              type_id: item.type_id,
-              common_name: item.common_name,
-              firstname: item.firstname,
-              lastname: item.lastname,
-              name: item.name,
-              display_name: item.display_name,
-              image_path: item.image_path,
-              height: item.height,
-              weight: item.weight,
-              date_of_birth: item.date_of_birth,
-              gender: item.gender,
-            },
-          });
+    let playerIds = [];
 
-          return newPlayer;
-        });
+    // Verificar si id es un array o un solo valor
+    if (Array.isArray(id)) {
+      playerIds = id;
+    } else {
+      playerIds.push(id);
+    }
 
-        newPlayers = await Promise.all(newPlayerDataPromises);
-      } else {
+    const newPlayerDataPromises = playerIds.map(async (playerId) => {
+      const player = await getPlayerIdFromAPI(playerId);
+      if (player) {
         const [newPlayer, created] = await Players.findOrCreate({
           where: { id: player.id },
           defaults: {
@@ -63,15 +41,19 @@ exports.getPlayerById = async (req, res) => {
           },
         });
 
-        newPlayers = [newPlayer];
+        return newPlayer;
       }
+    });
 
-      res.status(200).json(newPlayers);
-    } else {
-      res.status(404).json({ message: "Player not found" });
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Server error" });
+    const newPlayers = await Promise.all(newPlayerDataPromises);
+    res.status(200).json(newPlayers);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+
+
+
