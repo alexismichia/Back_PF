@@ -33,10 +33,10 @@ exports.createCart = async (req, res) => {
 
 // GET /carts/:cartId
 exports.getCartById = async (req, res) => {
-  const { cartId } = req.params;
+  const { id } = req.params;
   try {
     // Obtener el carrito por su ID, incluyendo la información del usuario y el producto relacionados
-    const cart = await Cart.findByPk(cartId, {
+    const cart = await Cart.findOne( {where:{userId:id},
       include: [
         {
           model: User,
