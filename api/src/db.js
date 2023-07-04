@@ -31,16 +31,18 @@ const {
   ReviewsModel,
   ProductModel,
   CartModel,
+  CartProductModel
 } = require("./models/index");
 
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
+  {
+    logging: false,
+    native: false,
+  }
+);
+    
 
-    const sequelize = new Sequelize(
-      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
-      {
-        logging: false,
-        native: false,
-      }
-    ); 
 //   const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
 // const sequelize = new Sequelize(
@@ -81,6 +83,7 @@ LeagueModel(sequelize);
 ReviewsModel(sequelize);
 ProductModel(sequelize);
 CartModel(sequelize);
+CartProductModel(sequelize)
 
 const {
   Team,
@@ -112,6 +115,7 @@ const {
   Reviews,
   Product,
   Cart,
+  CartProduct
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -129,8 +133,8 @@ const {
 
 User.hasOne(Cart, { foreignKey: 'userId' });
 Cart.belongsTo(User, { foreignKey: 'userId' });
-Cart.belongsToMany(Product, { through: 'CartProduct', foreignKey: 'cartId' });
-Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId' });
+Cart.belongsToMany(Product, { through: CartProduct, foreignKey: 'cartId' });
+Product.belongsToMany(Cart, { through: CartProduct, foreignKey: 'productId' });
 
 
 // Product.hasMany(Reviews);
