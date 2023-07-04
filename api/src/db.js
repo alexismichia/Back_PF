@@ -34,7 +34,6 @@ const {
   CartProductModel
 } = require("./models/index");
 
-<<<<<<< HEAD
    const sequelize = new Sequelize(
      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
      {
@@ -42,19 +41,7 @@ const {
        native: false,
      }
    ); 
- const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
-=======
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
-  {
-    logging: false,
-    native: false,
-  }
-);
-    
-
-//   const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
->>>>>>> 69c1b4649b8c4cec9fb4fdd0b8db40abc9b14281
+//  const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
 // const sequelize = new Sequelize(
 //   `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
@@ -63,10 +50,6 @@ const sequelize = new Sequelize(
 //     native: false,
 //   }
 // );  
-<<<<<<< HEAD
-=======
-
->>>>>>> 69c1b4649b8c4cec9fb4fdd0b8db40abc9b14281
 //connects models to sequelize
 CoachModel(sequelize);
 FixtureModel(sequelize);

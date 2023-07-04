@@ -51,10 +51,9 @@ userService.createUser = async (
   }
 };
 
-userService.loginWithGoogle = async (token) => {
-  // Verificar el token de identidad con Google
+userService.loginWithGoogle = async (tokenId) => {
   const ticket = await client.verifyIdToken({
-    idToken: token,
+    idToken: tokenId,
     audience: clientId,
   });
   
@@ -64,15 +63,13 @@ userService.loginWithGoogle = async (token) => {
     throw new Error("Usuario no autenticado");
   }
 
-  // Comprobar si el usuario ya existe en la base de datos
   let user = await User.findOne({ where: { email: payload.email } });
   
-  // Si el usuario no existe, crear un nuevo usuario con la información del token
   if (!user) {
     user = await User.create({
       username: payload.email,
       email: payload.email,
-      password: payload.sub, // Este campo es opcional, ya que no necesitas una contraseña con Google Sign-In
+      password: payload.sub, 
     });
   }
 
