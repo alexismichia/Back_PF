@@ -74,6 +74,9 @@ userService.loginWithGoogle = async (token) => {
       email: payload.email,
       password: payload.sub, // Este campo es opcional, ya que no necesitas una contraseña con Google Sign-In
     });
+
+    const newCart = await Cart.create({ userId: user.id});
+    emailNewUser(user.email, user.username)
   }
 
   return user;
