@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: 0,
+      defaultValue: 1,
     },
     createdAt: {
       type: DataTypes.DATE,
