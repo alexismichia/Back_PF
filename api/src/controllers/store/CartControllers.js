@@ -1,4 +1,4 @@
-const { Cart, User, Product, CartProduct } = require("../../db");
+const { Cart, User, Product } = require("../../db");
 
 // put /carts
 exports.createCart = async (req, res) => {
@@ -17,14 +17,12 @@ exports.createCart = async (req, res) => {
 
     if (!cart) {
       // Si el carrito no existe, crear uno nuevo y relacionarlo con el usuario
-      cart = await Cart.create({ userId, quantity: 1 }); // Set initial quantity to 1
-      await cart.addProduct(product); 
+      cart = await Cart.create({ userId });
+      await cart.addProduct(product); // Associate the product with the cart
       res.status(201).json(cart);
     } else {
-      // Incrementar la cantidad del carrito
-      cart.quantity += 1;
-      await cart.save();
-      await cart.addProduct(product); // Associate the product with the carts
+      // Agregar el productId al array cart del usuario
+      await cart.addProduct(product); // Associate the product with the cart
       res.status(201).json(cart);
     }
   } catch (error) {
@@ -33,23 +31,25 @@ exports.createCart = async (req, res) => {
   }
 };
 
+
 // GET /carts/:cartId
 exports.getCartById = async (req, res) => {
   const { id } = req.params;
   try {
+
     // Obtener el carrito por su ID, incluyendo la información del usuario y el producto relacionados
-    const cart = await Cart.findOne({
-      where: { userId: id },
+    const cart = await Cart.findOne( {where:{userId:id},
       include: [
         {
           model: User,
         },
         {
           model: Product,
-          through: { attributes: [] },
+          through: {attributes: [],}
         },
       ],
     });
+
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });

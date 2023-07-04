@@ -27,6 +27,7 @@ const LeagueModel= require("./League")
 const ReviewsModel= require("./Reviews")
 const ProductModel= require("./Product")
 const CartModel = require("./Cart")
+const CartProductModel = require("./CartProduct")
 
 module.exports = {
   CoachModel,
@@ -58,4 +59,5 @@ module.exports = {
   ReviewsModel,
   ProductModel,
   CartModel,
+  CartProductModel
 };
