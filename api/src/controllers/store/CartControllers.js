@@ -117,3 +117,35 @@ exports.deleteCartItem = async (req, res) => {
   }
 };
 
+exports.deleteAllCartItems = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const cart = await Cart.findOne({ where: { userId } });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // Retrieve all cart items associated with the cart
+    const cartItems = await CartProduct.findAll({
+      where: { cartId: cart.id },
+    });
+
+    // Update the product stock and delete cart items
+    for (const cartItem of cartItems) {
+      const product = await Product.findByPk(cartItem.productId);
+      if (product) {
+        product.stock += cartItem.quantity; // Increase the stock by the cart item quantity
+        await product.save();
+      }
+      await cart.removeProduct(product); // Remove the product from the cart
+    }
+    cart.quantity = 0;
+    await cart.save()
+    res.status(200).json({ message: "All cart items deleted" });
+  } catch (error) {
+    console.error("Error deleting cart items:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
