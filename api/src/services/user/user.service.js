@@ -122,7 +122,7 @@ userService.loginUser = async (email, password) => {
   return { user, token };
 };
 
-userService.putRole = async (userId, newRole, requestingUserRole) => {
+userService.putRole = async (userId, role, requestingUserRole) => {
   try {
     const user = await User.findByPk(userId);
 
@@ -134,8 +134,8 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
       throw new Error("No tienes permisos para modificar el rol de usuario");
     }
 
-    console.log("Nuevo rol:", newRole);
-    user.role = newRole;
+    console.log("Nuevo rol:", role);
+    user.role = role;
     await user.save();
 
     return user;
@@ -144,6 +144,7 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
     throw new Error("Error al modificar el rol del usuario");
   }
 };
+
 
 const { Op, Sequelize } = require("sequelize");
 
