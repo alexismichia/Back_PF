@@ -2,7 +2,6 @@ const { Cart, User, Product, CartProduct } = require("../../db");
 // const CartProduct = require("../../models/CartProduct");
 
 // put /carts
-// POST /carts
 exports.createCart = async (req, res) => {
   const { userId, productId } = req.body;
   try {
@@ -51,24 +50,24 @@ exports.createCart = async (req, res) => {
 
 
 
-// GET /carts/:cartId
+// GET /carts/:userId
 exports.getCartById = async (req, res) => {
   const { id } = req.params;
   try {
-
-    // Obtener el carrito por su ID, incluyendo la información del usuario y el producto relacionados
-    const cart = await Cart.findOne( {where:{userId:id},
+    const cart = await Cart.findOne({
+      where: { userId: id },
       include: [
         {
           model: User,
         },
         {
           model: Product,
-          through: {attributes: [],}
+          through: {
+            attributes: ["quantity"], // Include the quantity attribute from the CartProduct association
+          },
         },
       ],
     });
-
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
@@ -80,6 +79,7 @@ exports.getCartById = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // DELETE /carts/:cartId
 exports.deleteCartItem = async (req, res) => {
