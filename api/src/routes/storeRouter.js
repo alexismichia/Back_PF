@@ -25,12 +25,12 @@ storeRouter.put("/cart/add", createCart);
 
 // Eliminar un producto del carrito
 
-storeRouter.put("/cart/remove", deleteCartItem);
+storeRouter.put("/cart/delete", deleteCartItem);
 
 // Obtener los artículos del carrito
 storeRouter.get("/cart/items/:id", getCartById);
 
-storeRouter.delete('/cart/:cartId', deleteCartItem);
+// storeRouter.delete('/cart/:cartId', deleteCartItem);
 
 
 module.exports = storeRouter;

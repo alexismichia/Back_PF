@@ -1,10 +1,12 @@
-const { Cart, User, Product } = require("../../db");
+const { Cart, User, Product, CartProduct } = require("../../db");
+// const CartProduct = require("../../models/CartProduct");
 
 // put /carts
+// POST /carts
 exports.createCart = async (req, res) => {
   const { userId, productId } = req.body;
   try {
-    // Verificar si el usuario existe
+    // Verify if the user and product exist
     const user = await User.findByPk(userId);
     const product = await Product.findByPk(productId);
 
@@ -12,24 +14,41 @@ exports.createCart = async (req, res) => {
       return res.status(404).json({ message: "User or product not found" });
     }
 
-    // Buscar el carrito existente del usuario
+    // Find the existing cart of the user
     let cart = await Cart.findOne({ where: { userId } });
 
     if (!cart) {
-      // Si el carrito no existe, crear uno nuevo y relacionarlo con el usuario
+      // If the cart doesn't exist, create a new one and associate it with the user
       cart = await Cart.create({ userId });
-      await cart.addProduct(product); // Associate the product with the cart
-      res.status(201).json(cart);
-    } else {
-      // Agregar el productId al array cart del usuario
-      await cart.addProduct(product); // Associate the product with the cart
-      res.status(201).json(cart);
     }
+
+    // Find the cart item for the specific product and user ID
+    const cartItem = await CartProduct.findOne({
+      where: { cartId: cart.id, productId },
+    });
+
+    if (cartItem) {
+      // If the product is already in the cart, update the quantity
+      cartItem.quantity += 1;
+      await cartItem.save();
+    } else {
+      // If the product is not in the cart, add it with a quantity of 1
+      await cart.addProduct(product);
+    }
+
+    // Update the cart's quantity and product's stock
+    cart.quantity += 1;
+    product.stock -= 1;
+    await cart.save();
+    await product.save();
+
+    res.status(201).json(cart);
   } catch (error) {
     console.error("Error creating cart:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 // GET /carts/:cartId
