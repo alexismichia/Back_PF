@@ -81,22 +81,39 @@ exports.getCartById = async (req, res) => {
 };
 
 
-// DELETE /carts/:cartId
+// DELETE /carts/delete
 exports.deleteCartItem = async (req, res) => {
-  const { userId } = req.params;
+  const { userId, productId } = req.body;
   try {
-    const cart = await Cart.findByPk(userId);
+    const cart = await Cart.findOne({ where: { userId } });
+    const product = await Product.findByPk(productId)
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
+    const cartItem = await CartProduct.findOne({
+      where: { cartId: cart.id, productId },
+    });
 
-    // Eliminar el registro del carrito (borrado lógico)
-    await cart.destroy();
+    if (!cartItem) {
+      return res.status(404).json({ message: "Cart item not found" });
+    }
+    product.stock += 1
+    cart.quantity -= 1
+    cartItem.quantity -= 1;
+    await product.save()
+    await cart.save();
 
-    res.status(200).json({ message: "Cart item deleted" });
+    if (cartItem.quantity === 0) {
+      await cartItem.destroy();
+    } else {
+      await cartItem.save();
+    }
+
+    res.status(200).json({ message: "Cart item removed" });
   } catch (error) {
-    console.error("Error deleting cart item:", error);
+    console.error("Error updating cart item:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
