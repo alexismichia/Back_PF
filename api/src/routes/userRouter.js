@@ -11,6 +11,7 @@
     const { getUserId } = require("../controllers/user/getUserById")
     const { deleteUser } = require("../controllers/admin/deleteUser");
 
+<<<<<<< HEAD
     userRouter.post("/", createUser);
     userRouter.get("/userid/:id", getUserId);  
     userRouter.get("/:username", getUsers);
@@ -20,5 +21,16 @@
     userRouter.post("/login", loginUser);
     userRouter.post("/login/google", loginWithGoogle);
     userRouter.put("/image/:id", putUserImage)
+=======
+userRouter.post("/", createUser);
+userRouter.get("/userid/:id", getUserId);  
+userRouter.get("/:username", getUsers);
+userRouter.delete("/:username", authenticateJWT, authorizeRole('admin'), deleteUser);
+userRouter.put("/:id", updateUser);
+userRouter.post("/login", loginUser);
+userRouter.post("/login/google", loginWithGoogle);
+userRouter.put("/image/:id", putUserImage)
+userRouter.put("/role", putRole)
+>>>>>>> develop
 
     module.exports = userRouter;

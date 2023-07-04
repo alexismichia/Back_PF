@@ -18,19 +18,22 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE',
       },
     },
-    productId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Products',
-        key: 'id',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-    },
+
+    // productId: {
+    //   type: DataTypes.ARRAY(DataTypes.INTEGER),
+    //   allowNull: true,
+    //   references: {
+    //     model: 'Products',
+    //     key: 'id',
+    //     onDelete: 'CASCADE',
+    //     onUpdate: 'CASCADE',
+    //   },
+    // },
+
+    
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 1,
     },
     createdAt: {

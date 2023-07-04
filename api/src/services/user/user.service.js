@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../../src/db.js");
+const { User, Cart } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
+const {emailPayment} = require("../../notifications/service/emailPayment.js")
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require('google-auth-library');
@@ -39,6 +40,7 @@ userService.createUser = async (
       favorite_players: favorite_players || [],
       favorite_teams: favorite_teams || [],
     });
+    const newCart = await Cart.create({ userId: newUser.id});
 
     emailNewUser(email, username);
     
@@ -93,7 +95,10 @@ userService.updateUser = async (id, body) => {
   if (!user) return;
   if (user) {
     await User.update(body, { where: { id: id } })
-      .then((data) => (userUpdated = data))
+    .then((data) => {
+      userUpdated = data;
+      if (body.isPremium === true) {emailPayment(user.email)}
+    })
       .catch((err) => console.log(err));
   }
 
