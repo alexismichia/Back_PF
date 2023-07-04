@@ -5,37 +5,39 @@ const  {Team} = require('../../db')
 exports.getTeamBySeason = async (req, res) => {
   const { id } = req.params;
   try {
-    const team = await teamService.getTeamBySeason(id);
-    if (team) {
-      const newTeamDataPromises = team.map(async (item) => {
-        const [newTeam, created] = await Team.findOrCreate({
-          where: { id: item.id },
-          defaults: {
-            id: item.id,
-            country_id: item.country_id,
-            venue_id: item.venue_id,
-            gender: item.gender,
-            name: item.name,
-            short_code: item.short_code,
-            image_path: item.image_path,
-            founded: item.founded,
-            type: item.type,
-            placeholder: item.placeholder,
-            last_played_at: item.last_played_at,
-          },
-        });
+    const team = await teamService.getTeamById(id);
 
-        return newTeam;
-      });
-
-      const newTeams = await Promise.all(newTeamDataPromises);
-      res.status(200).json(newTeams);
-    } else {
-      res.status(404).json({ message: 'No team found' });
+    if (!team) {
+      return res.status(404).json({ message: 'No team found' });
     }
+
+    const { trophies,players, ...teamData } = team;
+
+    console.log(team.players, team.trophies)
+    const formattedTrophies = trophies?.map((trophy) => ({
+      league_id: trophy.league_id,
+      season_id: trophy.season_id,
+    }));
+    const processedPlayers = players?.map((player) => player.player_id);
+
+
+    const [foundTeam, created] = await Team.findOrCreate({
+      where: { id },
+      defaults: {
+        ...teamData,
+        trophies: formattedTrophies,
+        players: processedPlayers,
+      },
+    });
+
+    if (!created) {
+      return res.status(200).json(foundTeam.toJSON());
+    }
+
+    console.log(foundTeam.toJSON());
+    res.status(200).json(foundTeam);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
-

@@ -25,6 +25,9 @@ const UserModel = require("./User");
 const VenueModel = require("./Venue");
 const LeagueModel= require("./League")
 const ReviewsModel= require("./Reviews")
+const ProductModel= require("./Product")
+const CartModel = require("./Cart")
+const CartProductModel = require("./CartProduct")
 
 module.exports = {
   CoachModel,
@@ -54,4 +57,7 @@ module.exports = {
   VenueModel,
   LeagueModel,
   ReviewsModel,
+  ProductModel,
+  CartModel,
+  CartProductModel
 };

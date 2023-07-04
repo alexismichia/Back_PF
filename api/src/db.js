@@ -29,8 +29,12 @@ const {
   VenueModel,
   LeagueModel,
   ReviewsModel,
+  ProductModel,
+  CartModel,
+  CartProductModel
 } = require("./models/index");
 
+<<<<<<< HEAD
    const sequelize = new Sequelize(
      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
      {
@@ -39,6 +43,18 @@ const {
      }
    ); 
  const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
+=======
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
+  {
+    logging: false,
+    native: false,
+  }
+);
+    
+
+//   const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
+>>>>>>> 69c1b4649b8c4cec9fb4fdd0b8db40abc9b14281
 
 // const sequelize = new Sequelize(
 //   `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
@@ -47,6 +63,10 @@ const {
 //     native: false,
 //   }
 // );  
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69c1b4649b8c4cec9fb4fdd0b8db40abc9b14281
 //connects models to sequelize
 CoachModel(sequelize);
 FixtureModel(sequelize);
@@ -74,7 +94,10 @@ TypeModel(sequelize);
 UserModel(sequelize);
 VenueModel(sequelize);
 LeagueModel(sequelize);
-ReviewsModel(sequelize)
+ReviewsModel(sequelize);
+ProductModel(sequelize);
+CartModel(sequelize);
+CartProductModel(sequelize)
 
 const {
   Team,
@@ -104,6 +127,9 @@ const {
   Type,
   League,
   Reviews,
+  Product,
+  Cart,
+  CartProduct
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -115,6 +141,15 @@ const {
 
 // Team.hasMany(Coach, { foreignKey: 'team_id' });
 // Coach.belongsTo(Team, { foreignKey: 'team_id' });
+
+  // // Product.belongsToMany(User, { through: Cart, foreignKey: 'productId' });
+  // Cart.belongsTo(User, { foreignKey: 'userId' })
+
+User.hasOne(Cart, { foreignKey: 'userId' });
+Cart.belongsTo(User, { foreignKey: 'userId' });
+Cart.belongsToMany(Product, { through: CartProduct, foreignKey: 'cartId' });
+Product.belongsToMany(Cart, { through: CartProduct, foreignKey: 'productId' });
+
 
 // Product.hasMany(Reviews);
 

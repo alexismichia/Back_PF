@@ -109,3 +109,6 @@ dist
 # package-lock.json
 package-lock.json
 
+# /api/src/db.js
+
+# /index.js 

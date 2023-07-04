@@ -14,6 +14,7 @@ teamService.getTeamsByCountry = async (id) => {
         params: {
           // per_page: 2, for tests
           api_token: API_KEY,
+          include: 'trophies;players',
         },
       });
       const responseData = response.data.data;
@@ -34,22 +35,22 @@ teamService.getTeamsByCountry = async (id) => {
   }};
 
 
-teamService.getTeamById = async (id) => {
-  const includes = "venue;coaches;players;latest;upcoming,seasons,statistics,trophies,socials"
-  const URL = `${BASE_URL}/${id}`;
-  try {
-    const response = await axios.get(URL, {
-      params: {
-        api_token: API_KEY,
-        include:includes
-      }
-    });
-    return response.data.data;
-  } catch (error) {
-    console.error(`Error fetching data from API: ${error}`);
-    throw error;
-  }
-};
+  teamService.getTeamById = async (id) => {
+    const URL = `${BASE_URL}/${id}`;
+    try {
+      const response = await axios.get(URL, {
+        params: {
+          api_token: API_KEY,
+          include: 'trophies;players', // Agregar los includes deseados
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      console.error(`Error fetching data from API: ${error}`);
+      throw error;
+    }
+  };
+  
 
 teamService.getTeamBySeason = async (id) => {
   const URL = `${BASE_URL}/seasons/${id}`;
@@ -73,7 +74,7 @@ teamService.getTeamByName = async (name) => {
     const response = await axios.get(URL, {
       params: {
         api_token: API_KEY,
-        include:includes
+        include: 'trophies;players',
       }
     });
     return response.data.data;
@@ -91,7 +92,8 @@ teamService.getNationalTeam = async () => {
   while (keepGoing) {
     const response = await axios.get(`${BASE_URL}?page=${page}`, {
       params: {
-        api_token: API_KEY
+        api_token: API_KEY,
+        include: 'trophies;players',
       }
     });
 
@@ -127,7 +129,8 @@ teamService.getNationalTeambyName = async (name) => {
   try {
     const response = await axios.get(URL, {
       params: {
-        api_token: API_KEY
+        api_token: API_KEY,
+        include: 'trophies;players',
       }
     });
     const nationalTeams = response.data.data.filter(team => {

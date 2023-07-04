@@ -21,9 +21,9 @@ exports.getFixtureByDateRangeFromAPI = async (startDate, endDate) => {
       allData.push(...responseData);
 
       const pagination = response.data.pagination;
-      URL = pagination.next_page;
+      URL = pagination?.next_page;
 
-      if (!pagination.has_more) {
+      if (!pagination?.has_more) {
         URL = null;
       }
     }

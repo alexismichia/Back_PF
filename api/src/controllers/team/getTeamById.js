@@ -1,6 +1,5 @@
 const teamService = require('../../services/team/getTeam.service');
-const  {Team} = require('../../db')
-
+const { Team } = require('../../db');
 
 exports.getTeamById = async (req, res) => {
   const { id } = req.params;
@@ -11,26 +10,29 @@ exports.getTeamById = async (req, res) => {
       return res.status(404).json({ message: 'No team found' });
     }
 
+    const { trophies,players, ...teamData } = team;
+
+    console.log(team.players, team.trophies)
+    const formattedTrophies = trophies?.map((trophy) => ({
+      league_id: trophy.league_id,
+      season_id: trophy.season_id,
+    }));
+    const processedPlayers = players?.map((player) => player.player_id);
+
+
     const [foundTeam, created] = await Team.findOrCreate({
       where: { id },
       defaults: {
-        country_id: team.country_id,
-        venue_id: team.venue_id,
-        gender: team.gender,
-        name: team.name,
-        short_code: team.short_code,
-        image_path: team.image_path,
-        founded: team.founded,
-        type: team.type,
-        placeholder: team.placeholder,
-        last_played_at: team.last_played_at
-      }
+        ...teamData,
+        trophies: formattedTrophies,
+        players: processedPlayers,
+      },
     });
 
     if (!created) {
       return res.status(200).json(foundTeam.toJSON());
     }
-    
+
     console.log(foundTeam.toJSON());
     res.status(200).json(foundTeam);
   } catch (error) {

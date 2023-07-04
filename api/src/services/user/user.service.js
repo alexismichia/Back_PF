@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../../src/db.js");
+const { User, Cart } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
+const {emailPayment} = require("../../notifications/service/emailPayment.js")
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require('google-auth-library');
@@ -39,6 +40,7 @@ userService.createUser = async (
       favorite_players: favorite_players || [],
       favorite_teams: favorite_teams || [],
     });
+    const newCart = await Cart.create({ userId: newUser.id});
 
     emailNewUser(email, username);
     
@@ -93,7 +95,10 @@ userService.updateUser = async (id, body) => {
   if (!user) return;
   if (user) {
     await User.update(body, { where: { id: id } })
-      .then((data) => (userUpdated = data))
+    .then((data) => {
+      userUpdated = data;
+      if (body.isPremium === true) {emailPayment(user.email)}
+    })
       .catch((err) => console.log(err));
   }
 
@@ -145,11 +150,33 @@ userService.putRole = async (userId, newRole, requestingUserRole) => {
   }
 };
 
-userService.getUser = async (id) => {
+const { Op, Sequelize } = require("sequelize");
+
+userService.getUser = async (username) => {
   try {
-    const user = await User.findOne({ where: { id } });
+    const users = await User.findAll({
+      where: Sequelize.where(
+        Sequelize.fn('lower', Sequelize.col('username')),
+        { [Op.like]: Sequelize.fn('lower', `${username}%`) }
+      )
+    });
+
+    if (users.length === 0) {
+      throw new Error("No se encuentra ningún usuario");
+    }
+    return users;
+  } catch (error) {
+    console.error(`Error getting users: ${error}`);
+    throw error;
+  }
+};
+
+userService.getUserById = async (id) => {
+  try {
+    console.log("id", id);
+    const user = await User.findByPk(id);
     if (!user) {
-      throw new Error("No se encuentra el usuario");
+      throw new Error("No se encuentra ningún usuario con ese id");
     }
     return user;
   } catch (error) {
@@ -157,5 +184,35 @@ userService.getUser = async (id) => {
     throw error;
   }
 };
+
+userService.deleteUser = async (requestingUserId, targetUsername) => {
+  try {
+    const requestingUser = await User.findOne({ where: { id: requestingUserId } });
+    if (!requestingUser || requestingUser.role !== 'admin') {
+      throw new Error("El usuario debe ser administrador para eliminar a otros usuarios");
+    }
+
+    const targetUser = await User.findOne({ where: { username: targetUsername } });
+    if (!targetUser) {
+      throw new Error("No se encuentra ningún usuario con ese username");
+    }
+    
+    if (requestingUser.id === targetUser.id) {
+      throw new Error("No puedes eliminarte a ti mismo");
+    }
+
+    await User.destroy({ where: { username: targetUsername } });
+
+    return targetUser;
+
+  } catch (error) {
+    console.error(`Error deleting user: ${error}`);
+    throw error;
+  }
+};
+
+
+
+
 
 module.exports = userService;
