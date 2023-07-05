@@ -31,26 +31,25 @@ const {
   ReviewsModel,
   ProductModel,
   CartModel,
+  CartProductModel
 } = require("./models/index");
 
+   const sequelize = new Sequelize(
+     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
+     {
+       logging: false,
+       native: false,
+     }
+   ); 
+//  const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
 
-     const sequelize = new Sequelize(
-       `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`,
-       {
-         logging: false,
-         native: false,
-       }
-     );  
-
- /*  const { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } = process.env;
-
-const sequelize = new Sequelize(
-  `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
-  {
-    logging: false,
-    native: false,
-  }
-);  */  
+// const sequelize = new Sequelize(
+//   `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}`,
+//   {
+//     logging: false,
+//     native: false,
+//   }
+// );  
 //connects models to sequelize
 CoachModel(sequelize);
 FixtureModel(sequelize);
@@ -81,6 +80,7 @@ LeagueModel(sequelize);
 ReviewsModel(sequelize);
 ProductModel(sequelize);
 CartModel(sequelize);
+CartProductModel(sequelize)
 
 const {
   Team,
@@ -112,6 +112,7 @@ const {
   Reviews,
   Product,
   Cart,
+  CartProduct
 } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -123,12 +124,15 @@ const {
 
 // Team.hasMany(Coach, { foreignKey: 'team_id' });
 // Coach.belongsTo(Team, { foreignKey: 'team_id' });
-User.hasOne(Cart, { foreignKey: 'userId', as: 'UserCart' });
-Product.belongsToMany(User, { through: Cart, foreignKey: 'productId', as: 'UserProducts' });
-Cart.belongsTo(User, { foreignKey: 'userId', as: 'CartUser' });
-Cart.belongsToMany(Product, { through: 'CartProduct', foreignKey: 'cartId' });
 
-Product.belongsToMany(Cart, { through: 'CartProduct', foreignKey: 'productId', as: 'ProductCarts' });
+  // // Product.belongsToMany(User, { through: Cart, foreignKey: 'productId' });
+  // Cart.belongsTo(User, { foreignKey: 'userId' })
+
+User.hasOne(Cart, { foreignKey: 'userId' });
+Cart.belongsTo(User, { foreignKey: 'userId' });
+Cart.belongsToMany(Product, { through: CartProduct, foreignKey: 'cartId' });
+Product.belongsToMany(Cart, { through: CartProduct, foreignKey: 'productId' });
+
 
 // Product.hasMany(Reviews);
 

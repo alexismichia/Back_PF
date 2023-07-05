@@ -1,22 +1,23 @@
-const userService = require('../../services/user/user.service');
+const userService = require("../../services/user/user.service");
 
 async function putRole(req, res) {
-    try {
-      const { userId } = req.body; // Acceder a "userId" en lugar de "id"
-      const { newRole } = req.body; // Acceder a "newRole" en lugar de "role"
-  
-      const requestingUserRole = req.user.role;
-  
-      const updatedUser = await userService.putRole(userId, newRole, requestingUserRole);
-  
-      return res.json(updatedUser);
-    } catch (error) {
-      return res.status(500).json({ error: 'Error al modificar el rol del usuario' });
+  const id = req.params.id;
+  const body = req.body;
+
+  try {
+    const updateRoleUser = await userService.putRole(id, body);
+
+    if (updateRoleUser) {
+      res.status(200).send("User Role User was updated successfully.");
+    } else {
+      res.status(401).send(`Cannot update User Role with id=${id}`);
     }
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(`Server Error updating User Role with id= ${id}`);
   }
-  
-  
-  module.exports = {
-    putRole,
-  };
-  
+}
+
+module.exports = {
+  putRole,
+};

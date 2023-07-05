@@ -1,11 +1,13 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../../src/db.js");
+const { User, Cart } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
+const { emailPayment } = require("../../notifications/service/emailPayment.js");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require('google-auth-library');
+const { OAuth2Client } = require("google-auth-library");
 
-const clientId = "824712636886-5dlecueq2b9iq35rv1ok86i4jvcobm7l.apps.googleusercontent.com";
+const clientId =
+  "824712636886-5dlecueq2b9iq35rv1ok86i4jvcobm7l.apps.googleusercontent.com";
 const client = new OAuth2Client(clientId); // Asegúrate de instanciar el cliente OAuth2
 
 let userService = {};
@@ -39,9 +41,10 @@ userService.createUser = async (
       favorite_players: favorite_players || [],
       favorite_teams: favorite_teams || [],
     });
+    const newCart = await Cart.create({ userId: newUser.id });
 
     emailNewUser(email, username);
-    
+
     return newUser;
   } catch (error) {
     console.error(`Error creating user: ${error}`);
@@ -49,33 +52,33 @@ userService.createUser = async (
   }
 };
 
-userService.loginWithGoogle = async (token) => {
-  // Verificar el token de identidad con Google
+userService.loginWithGoogle = async (tokenId) => {
   const ticket = await client.verifyIdToken({
-    idToken: token,
+    idToken: tokenId,
     audience: clientId,
   });
-  
+
   const payload = ticket.getPayload();
 
   if (!payload.email_verified) {
     throw new Error("Usuario no autenticado");
   }
 
-  // Comprobar si el usuario ya existe en la base de datos
   let user = await User.findOne({ where: { email: payload.email } });
-  
-  // Si el usuario no existe, crear un nuevo usuario con la información del token
+
   if (!user) {
     user = await User.create({
       username: payload.email,
       email: payload.email,
-      password: payload.sub, // Este campo es opcional, ya que no necesitas una contraseña con Google Sign-In
+      password: payload.sub,
     });
+
+    const newCart = await Cart.create({ userId: user.id});
+    emailNewUser(user.email, user.username)
   }
 
   return user;
-}
+};
 
 userService.getUserByEmail = async (email) => {
   try {
@@ -93,7 +96,12 @@ userService.updateUser = async (id, body) => {
   if (!user) return;
   if (user) {
     await User.update(body, { where: { id: id } })
-      .then((data) => (userUpdated = data))
+      .then((data) => {
+        userUpdated = data;
+        if (body.isPremium === true) {
+          emailPayment(user.email);
+        }
+      })
       .catch((err) => console.log(err));
   }
 
@@ -122,27 +130,20 @@ userService.loginUser = async (email, password) => {
   return { user, token };
 };
 
-userService.putRole = async (userId, newRole, requestingUserRole) => {
-  try {
-    const user = await User.findByPk(userId);
+userService.putRole = async (id, body) => {
+  let updatedRoleUser;
+  const isValidUser = await User.findByPk(id);
 
-    if (!user) {
-      throw new Error("Usuario no encontrado");
-    }
-
-    if (requestingUserRole !== "admin") {
-      throw new Error("No tienes permisos para modificar el rol de usuario");
-    }
-
-    console.log("Nuevo rol:", newRole);
-    user.role = newRole;
-    await user.save();
-
-    return user;
-  } catch (error) {
-    console.log("Error en putRole:", error);
-    throw new Error("Error al modificar el rol del usuario");
+  if (!isValidUser) {
+    throw new Error("Usuario no encontrado");
   }
+
+  if (isValidUser) {
+    await User.update(body, { where: { id: id } })
+      .then((data) => (updatedRoleUser = data))
+      .catch((err) => console.log(err));
+  }
+  return updatedRoleUser;
 };
 
 const { Op, Sequelize } = require("sequelize");
@@ -150,10 +151,9 @@ const { Op, Sequelize } = require("sequelize");
 userService.getUser = async (username) => {
   try {
     const users = await User.findAll({
-      where: Sequelize.where(
-        Sequelize.fn('lower', Sequelize.col('username')),
-        { [Op.like]: Sequelize.fn('lower', `${username}%`) }
-      )
+      where: Sequelize.where(Sequelize.fn("lower", Sequelize.col("username")), {
+        [Op.like]: Sequelize.fn("lower", `${username}%`),
+      }),
     });
 
     if (users.length === 0) {
@@ -180,5 +180,15 @@ userService.getUserById = async (id) => {
   }
 };
 
+userService.deleteUser = async (id) => {
+  let delUser;
+
+  if (id) {
+    await User.destroy({ where: { id: id } })
+      .then((data) => (delUser = data))
+      .catch((err) => console.log(err));
+  }
+  return delUser;
+};
 
 module.exports = userService;

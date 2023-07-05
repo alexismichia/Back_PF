@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Product = sequelize.define('Product', {
+  sequelize.define('Product', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -60,6 +60,5 @@ module.exports = (sequelize) => {
     paranoid: true, // Habilitar borrado lógico
   });
 
- 
 };
 
