@@ -1,12 +1,13 @@
 const bcrypt = require("bcrypt");
 const { User, Cart } = require("../../../src/db.js");
 const { emailNewUser } = require("../../notifications/service/emailNewUser.js");
-const {emailPayment} = require("../../notifications/service/emailPayment.js")
+const { emailPayment } = require("../../notifications/service/emailPayment.js");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require('google-auth-library');
+const { OAuth2Client } = require("google-auth-library");
 
-const clientId = "824712636886-5dlecueq2b9iq35rv1ok86i4jvcobm7l.apps.googleusercontent.com";
+const clientId =
+  "824712636886-5dlecueq2b9iq35rv1ok86i4jvcobm7l.apps.googleusercontent.com";
 const client = new OAuth2Client(clientId); // Asegúrate de instanciar el cliente OAuth2
 
 let userService = {};
@@ -40,10 +41,10 @@ userService.createUser = async (
       favorite_players: favorite_players || [],
       favorite_teams: favorite_teams || [],
     });
-    const newCart = await Cart.create({ userId: newUser.id});
+    const newCart = await Cart.create({ userId: newUser.id });
 
     emailNewUser(email, username);
-    
+
     return newUser;
   } catch (error) {
     console.error(`Error creating user: ${error}`);
@@ -56,7 +57,7 @@ userService.loginWithGoogle = async (tokenId) => {
     idToken: tokenId,
     audience: clientId,
   });
-  
+
   const payload = ticket.getPayload();
 
   if (!payload.email_verified) {
@@ -64,17 +65,17 @@ userService.loginWithGoogle = async (tokenId) => {
   }
 
   let user = await User.findOne({ where: { email: payload.email } });
-  
+
   if (!user) {
     user = await User.create({
       username: payload.email,
       email: payload.email,
-      password: payload.sub, 
+      password: payload.sub,
     });
   }
 
   return user;
-}
+};
 
 userService.getUserByEmail = async (email) => {
   try {
@@ -92,10 +93,12 @@ userService.updateUser = async (id, body) => {
   if (!user) return;
   if (user) {
     await User.update(body, { where: { id: id } })
-    .then((data) => {
-      userUpdated = data;
-      if (body.isPremium === true) {emailPayment(user.email)}
-    })
+      .then((data) => {
+        userUpdated = data;
+        if (body.isPremium === true) {
+          emailPayment(user.email);
+        }
+      })
       .catch((err) => console.log(err));
   }
 
@@ -124,39 +127,30 @@ userService.loginUser = async (email, password) => {
   return { user, token };
 };
 
-userService.putRole = async (userId, role, requestingUserRole) => {
-  try {
-    const user = await User.findByPk(userId);
+userService.putRole = async (id, body) => {
+  let updatedRoleUser;
+  const isValidUser = await User.findByPk(id);
 
-    if (!user) {
-      throw new Error("Usuario no encontrado");
-    }
-
-    if (requestingUserRole !== "admin") {
-      throw new Error("No tienes permisos para modificar el rol de usuario");
-    }
-
-    console.log("Nuevo rol:", role);
-    user.role = role;
-    await user.save();
-
-    return user;
-  } catch (error) {
-    console.log("Error en putRole:", error);
-    throw new Error("Error al modificar el rol del usuario");
+  if (!isValidUser) {
+    throw new Error("Usuario no encontrado");
   }
-};
 
+  if (isValidUser) {
+    await User.update(body, { where: { id: id } })
+      .then((data) => (updatedRoleUser = data))
+      .catch((err) => console.log(err));
+  }
+  return updatedRoleUser;
+};
 
 const { Op, Sequelize } = require("sequelize");
 
 userService.getUser = async (username) => {
   try {
     const users = await User.findAll({
-      where: Sequelize.where(
-        Sequelize.fn('lower', Sequelize.col('username')),
-        { [Op.like]: Sequelize.fn('lower', `${username}%`) }
-      )
+      where: Sequelize.where(Sequelize.fn("lower", Sequelize.col("username")), {
+        [Op.like]: Sequelize.fn("lower", `${username}%`),
+      }),
     });
 
     if (users.length === 0) {
@@ -183,34 +177,15 @@ userService.getUserById = async (id) => {
   }
 };
 
-userService.deleteUser = async (requestingUserId, targetUsername) => {
-  try {
-    const requestingUser = await User.findOne({ where: { id: requestingUserId } });
-    if (!requestingUser || requestingUser.role !== 'admin') {
-      throw new Error("El usuario debe ser administrador para eliminar a otros usuarios");
-    }
+userService.deleteUser = async (id) => {
+  let delUser;
 
-    const targetUser = await User.findOne({ where: { username: targetUsername } });
-    if (!targetUser) {
-      throw new Error("No se encuentra ningún usuario con ese username");
-    }
-    
-    if (requestingUser.id === targetUser.id) {
-      throw new Error("No puedes eliminarte a ti mismo");
-    }
-
-    await User.destroy({ where: { username: targetUsername } });
-
-    return targetUser;
-
-  } catch (error) {
-    console.error(`Error deleting user: ${error}`);
-    throw error;
+  if (id) {
+    await User.destroy({ where: { id: id } })
+      .then((data) => (delUser = data))
+      .catch((err) => console.log(err));
   }
+  return delUser;
 };
-
-
-
-
 
 module.exports = userService;
