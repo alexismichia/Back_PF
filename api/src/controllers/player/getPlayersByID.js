@@ -79,35 +79,36 @@ exports.getPlayerById = async (req, res) => {
 
     const newPlayerDataPromises = playerIds.map(async (playerId) => {
       if (existingPlayerIds.includes(playerId)) {
-        // El jugador ya existe en la base de datos, no es necesario llamar a la API
+        // El jugador ya existe en la base de datos, no es necesario llamar al servicio
         const existingPlayer = existingPlayers.find(player => player.id === playerId);
         return existingPlayer;
-      }
+      } else {
+        // El jugador no existe en la base de datos, llamar al servicio para obtener los datos
+        const player = await getPlayerIdFromAPI(playerId);
+        if (player) {
+          const newPlayer = await Players.create({
+            id: player.id,
+            sport_id: player.sport_id,
+            country_id: player.country_id,
+            nationality_id: player.nationality_id,
+            city_id: player.city_id,
+            position_id: player.position_id,
+            detailed_position_id: player.detailed_position_id,
+            type_id: player.type_id,
+            common_name: player.common_name,
+            firstname: player.firstname,
+            lastname: player.lastname,
+            name: player.name,
+            display_name: player.display_name,
+            image_path: player.image_path,
+            height: player.height,
+            weight: player.weight,
+            date_of_birth: player.date_of_birth,
+            gender: player.gender,
+          });
 
-      const player = await getPlayerIdFromAPI(playerId);
-      if (player) {
-        const newPlayer = await Players.create({
-          id: player.id,
-          sport_id: player.sport_id,
-          country_id: player.country_id,
-          nationality_id: player.nationality_id,
-          city_id: player.city_id,
-          position_id: player.position_id,
-          detailed_position_id: player.detailed_position_id,
-          type_id: player.type_id,
-          common_name: player.common_name,
-          firstname: player.firstname,
-          lastname: player.lastname,
-          name: player.name,
-          display_name: player.display_name,
-          image_path: player.image_path,
-          height: player.height,
-          weight: player.weight,
-          date_of_birth: player.date_of_birth,
-          gender: player.gender,
-        });
-
-        return newPlayer;
+          return newPlayer;
+        }
       }
     });
 
